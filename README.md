@@ -41,9 +41,15 @@ Pinned release (fallback):
 @import url("https://stream.altffour.com/web/assets/add-ons/altffour-in-player-episode-preview-support-latest-min.css");
 ```
 
-## Optional JavaScript add-on (Altffour Tweaks Plugin via JavaScript Injector)
+## Recommended runtime setup (Altffour Tweaks Plugin)
 
-Use this when a home section title is rendered without a clickable link and you want a real route target.
+If you install and enable the **Altffour Tweaks Plugin**, it automatically manages the required JavaScript Injector entries on startup/config save.
+
+Use this path as the default setup.
+
+## Manual JavaScript fallback (only if plugin auto-sync is unavailable)
+
+Use this only when plugin-managed injector sync is unavailable and you need to add the runtime loader manually.
 
 1. Open `Dashboard -> Plugins -> JavaScript Injector`.
 2. Add a new script and name it `Altffour Tweaks Plugin`.
