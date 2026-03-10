@@ -11,7 +11,7 @@ const distDir = path.join(themeDir, "dist");
 
 function parseArgs(argv) {
     const options = {
-        source: "Theme/altffour-theme-v1.0.52.css",
+        source: "Theme/altffour-theme-v1.0.64.css",
         forkVersion: process.env.FORK_VERSION || "1.0.0",
         themeSlug: process.env.THEME_SLUG || "altffour-theme",
         brandName: process.env.BRAND_NAME || "Altffour Theme",

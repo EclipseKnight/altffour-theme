@@ -4,7 +4,7 @@ Altffour is a custom Jellyfin theme maintained in this repository.
 
 ## Source of truth
 
-- Main source CSS: `Theme/altffour-theme-v1.0.52.css`
+- Main source CSS: `Theme/altffour-theme-v1.0.64.css`
 - Nightly source CSS: `Theme/altffour-theme-nightly.css`
 - Build script: `scripts/build-theme.mjs`
 - Build output: `Theme/dist/`
@@ -13,24 +13,24 @@ Altffour is a custom Jellyfin theme maintained in this repository.
 
 ```bash
 node scripts/build-theme.mjs \
-  --source Theme/altffour-theme-v1.0.52.css \
-  --fork-version 1.0.52 \
+  --source Theme/altffour-theme-v1.0.64.css \
+  --fork-version 1.0.64 \
   --theme-slug altffour-theme \
   --brand-name "Altffour Theme"
 ```
 
 ## Jellyfin Custom CSS import
 
-Pinned release:
-
-```css
-@import url("https://stream.altffour.com/web/assets/altffour-theme-v1.0.52.min.css");
-```
-
-Latest build:
+Latest build (recommended):
 
 ```css
 @import url("https://stream.altffour.com/web/assets/altffour-theme-latest.min.css");
+```
+
+Pinned release (fallback):
+
+```css
+@import url("https://stream.altffour.com/web/assets/altffour-theme-v1.0.64.min.css");
 ```
 
 ## Optional add-ons

@@ -7,7 +7,7 @@
   "upstreamVersion": "1.0.64",
   "notes": {
     "stable": "Use pinned version files in Jellyfin Branding.",
-    "latest": "For testing only; do not use for production pinning.",
+    "latest": "Recommended default for day-to-day use. Keep stable pinned files for fallback.",
     "compat": "Reduced selector complexity for older clients (drops :has rules)."
   },
   "files": {
