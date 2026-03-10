@@ -1,0 +1,16 @@
+# Build outputs
+**/bin/
+**/obj/
+Plugin/build/
+
+# Node
+node_modules/
+
+# OS/editor
+.DS_Store
+*.swp
+*.swo
+
+# Local scratch
+/tmp.txt
+/commits.csv

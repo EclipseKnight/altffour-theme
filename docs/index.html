@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Altffour Theme</title>
+  <style>
+    body{font-family:Inter,system-ui,sans-serif;background:#0b1220;color:#e5e7eb;margin:0;padding:2rem}
+    .card{max-width:900px;margin:0 auto;background:#111827;border:1px solid #334155;border-radius:12px;padding:1.25rem}
+    code,pre{background:#0f172a;color:#cbd5e1;border-radius:8px}
+    pre{padding:0.75rem;overflow:auto}
+    a{color:#93c5fd}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Altffour Theme for Jellyfin</h1>
+    <p>This repository hosts the Altffour-maintained Jellyfin theme and optional add-ons.</p>
+    <h2>Import</h2>
+    <pre><code>@import url("https://stream.altffour.com/web/assets/altffour-theme-latest.min.css");</code></pre>
+    <h2>Optional add-ons</h2>
+    <pre><code>@import url("https://stream.altffour.com/web/assets/add-ons/media-bar-plugin-support-latest-min.css");
+@import url("https://stream.altffour.com/web/assets/add-ons/custom-media-covers-latest-min.css");
+@import url("https://stream.altffour.com/web/assets/add-ons/altffour-in-player-episode-preview-support-latest-min.css");</code></pre>
+    <h2>Optional JavaScript add-on (Altffour Tweaks Plugin)</h2>
+    <pre><code>(() => {
+  const id = "altffour-tweaks-plugin-loader";
+  if (document.getElementById(id)) return;
+  const script = document.createElement("script");
+  script.id = id;
+  script.src = "https://altffour.com/jellyfin-theme/add-ons/altffour-tweaks-plugin-latest-min.js";
+  script.defer = true;
+  document.head.appendChild(script);
+})();</code></pre>
+  </main>
+</body>
+</html>

@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Altffour Tweaks</title>
+    <style>
+        #configPage .statusLine {
+            font-weight: 600;
+        }
+
+        #configPage .status-ok {
+            color: #42d392;
+        }
+
+        #configPage .status-warn {
+            color: #f5c451;
+        }
+
+        #configPage .status-error {
+            color: #ff7b7b;
+        }
+
+        #configPage .settingsCard {
+            margin: 0.8rem 0 1rem;
+            padding: 0.95rem 1rem 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 0.7rem;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        #configPage .settingsCard > h2,
+        #configPage .settingsCard > h3 {
+            margin-top: 0;
+            margin-bottom: 0.45rem;
+        }
+
+        #configPage .settingItem {
+            margin-top: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        #configPage .settingItem:last-child {
+            margin-bottom: 0;
+        }
+
+        #configPage .settingItem .checkboxContainer {
+            margin: 0;
+        }
+
+        #configPage .settingItem .fieldDescription {
+            margin: 0.16rem 0 0 2.3rem;
+        }
+
+        #configPage .settingItem .fieldDescription.settingStateLine {
+            margin-top: 0.14rem;
+        }
+
+        #configPage .codeBlock {
+            margin: 0.35rem 0 0;
+            padding: 0.55rem 0.65rem;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 0.45rem;
+            background: rgba(0, 0, 0, 0.3);
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-family: Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.86rem;
+            line-height: 1.35;
+        }
+
+        #configPage .mutedNote {
+            color: var(--dimTextColor);
+        }
+
+        #configPage .tabContent[hidden] {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="configPage" data-role="page" class="page type-interior pluginConfigurationPage configPage" data-require="emby-button,emby-checkbox,emby-select">
+        <div data-role="content">
+            <div class="content-primary">
+                <h1>Altffour Tweaks</h1>
+
+                <div class="emby-tabs" role="tablist" aria-label="Altffour Tweaks sections">
+                    <button is="emby-button" type="button" class="emby-tab-button emby-tab-button-active" data-tab-target="statusTab" role="tab" aria-selected="true">Status</button>
+                    <button is="emby-button" type="button" class="emby-tab-button" data-tab-target="tweaksTab" role="tab" aria-selected="false">Tweaks</button>
+                    <button is="emby-button" type="button" class="emby-tab-button" data-tab-target="healthTab" role="tab" aria-selected="false">Health</button>
+                    <button is="emby-button" type="button" class="emby-tab-button" data-tab-target="diagnosticsTab" role="tab" aria-selected="false">Diagnostics</button>
+                </div>
+
+                <section id="statusTab" class="tabContent is-active" role="tabpanel" aria-hidden="false">
+                    <div class="verticalSection settingsCard">
+                        <h2>JavaScript Injector Status</h2>
+                        <div class="fieldDescription">
+                            Verifies whether JavaScript Injector is installed and active so runtime/theme injections can run.
+                        </div>
+                        <div id="jsInjectorStatusLine" class="fieldDescription statusLine">Checking JavaScript Injector status...</div>
+                        <div id="jsInjectorStatusDetail" class="fieldDescription"></div>
+                        <div class="fieldDescription">
+                            Repository:
+                            <a id="jsInjectorRepoLink" href="https://github.com/n00bcodr/Jellyfin-JavaScript-Injector" target="_blank" rel="noreferrer noopener">Jellyfin JavaScript Injector</a>
+                        </div>
+                    </div>
+
+                    <div class="verticalSection settingsCard">
+                        <h2>Branding CSS Status</h2>
+                        <div class="fieldDescription">
+                            Checks the Jellyfin Branding Custom CSS value and validates it against expected Altffour theme imports.
+                        </div>
+                        <div id="brandingCssStatusLine" class="fieldDescription statusLine">Checking Branding Custom CSS...</div>
+                        <div id="brandingCssStatusDetail" class="fieldDescription"></div>
+                        <div class="fieldDescription">Current value:</div>
+                        <pre class="codeBlock"><code id="brandingCssCurrentValueCode">unknown</code></pre>
+                        <div class="fieldDescription">
+                            Settings:
+                            <a id="brandingSettingsLink" href="/web/#/dashboard/general" target="_blank" rel="noreferrer noopener">Dashboard - General</a>
+                        </div>
+                        <div class="fieldDescription">
+                            Expected import example:
+                            <code>@import url("https://stream.altffour.com/web/assets/altffour-theme-latest.min.css");</code>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tweaksTab" class="tabContent" role="tabpanel" aria-hidden="true" hidden>
+                    <form class="configForm">
+                        <div class="verticalSection settingsCard">
+                            <h2>Dependency Overview</h2>
+                            <div class="fieldDescription">
+                                Runtime Injection is the master switch for JavaScript fixes. CSS add-ons run independently but still require JavaScript Injector to be active.
+                            </div>
+                            <div id="dependencySummary" class="fieldDescription statusLine">Checking dependencies...</div>
+                            <div id="runtimeGuardrailNote" class="fieldDescription">Checking runtime guardrails...</div>
+                            <div id="cssAddonsDependencyNote" class="fieldDescription">Checking CSS add-on dependency status...</div>
+                        </div>
+
+                        <div class="verticalSection settingsCard">
+                            <h2>Runtime Fixes</h2>
+
+                            <div class="settingItem">
+                                <label class="checkboxContainer">
+                                    <input is="emby-checkbox" type="checkbox" id="enableTweaksLoader" />
+                                    <span>Enable Runtime Injection (required for JavaScript fixes)</span>
+                                </label>
+                                <div class="fieldDescription">
+                                    Loads the Altffour runtime script through JavaScript Injector.
+                                </div>
+                                <div class="fieldDescription">
+                                    Turning this off disables all runtime fixes below and guardrails will switch them off on save.
+                                </div>
+                            </div>
+
+                            <div class="settingItem">
+                                <label class="checkboxContainer">
+                                    <input is="emby-checkbox" type="checkbox" id="enableDynamicHomeSpacer" />
+                                    <span>Enable dynamic home spacer fix</span>
+                                </label>
+                                <div class="fieldDescription">
+                                    Automatically pushes content below the Media Bar/hero boundary to prevent overlap after layout changes.
+                                </div>
+                                <div id="dynamicSpacerDependencyNote" class="fieldDescription settingStateLine">Checking runtime dependency...</div>
+                            </div>
+
+                            <div class="settingItem">
+                                <label class="checkboxContainer">
+                                    <input is="emby-checkbox" type="checkbox" id="enableExtraCardButtonsVisibility" />
+                                    <span>Show extra card options button</span>
+                                </label>
+                                <div class="fieldDescription">
+                                    Sets <code>--extraCardButtonsVisibility</code> to <code>block</code> so the extra card options button stays visible.
+                                </div>
+                                <div id="extraCardButtonsDependencyNote" class="fieldDescription settingStateLine">Checking runtime dependency...</div>
+                            </div>
+
+                            <div class="settingItem">
+                                <label class="inputLabel inputLabelUnfocused" for="themePalette">Theme palette</label>
+                                <select is="emby-select" id="themePalette" name="themePalette">
+                                    <option value="ocean">Ocean (default blue)</option>
+                                    <option value="graphite">Graphite (neutral gray)</option>
+                                    <option value="emerald">Emerald (green-teal)</option>
+                                    <option value="sunset">Sunset (warm amber)</option>
+                                    <option value="crimson">Crimson (deep red)</option>
+                                </select>
+                                <div class="fieldDescription">
+                                    Changes global background/accent tones while preserving the glass styling.
+                                </div>
+                                <div id="themePaletteDependencyNote" class="fieldDescription settingStateLine">Checking runtime dependency...</div>
+                            </div>
+
+                        </div>
+
+                        <div class="verticalSection settingsCard">
+                            <h2>UI Injection Add-ons (CSS)</h2>
+
+                            <div class="settingItem">
+                                <label class="checkboxContainer">
+                                    <input is="emby-checkbox" type="checkbox" id="enableMediaBarPluginSupport" />
+                                    <span>Enable Media Bar plugin support CSS injection</span>
+                                </label>
+                                <div class="fieldDescription">
+                                    Applies compatibility CSS for Media Bar plugin layout and spacing.
+                                </div>
+                            </div>
+
+                            <div class="settingItem">
+                                <label class="checkboxContainer">
+                                    <input is="emby-checkbox" type="checkbox" id="enableInPlayerEpisodePreviewSupport" />
+                                    <span>Enable In-Player Episode Preview support CSS injection</span>
+                                </label>
+                                <div class="fieldDescription">
+                                    Applies compatibility CSS for In-Player Episode Preview visuals and positioning.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fieldDescription mutedNote">
+                            All toggles on this page require JavaScript Injector to be installed and active.
+                        </div>
+
+                        <div class="verticalSection verticalSection-extrabottompadding">
+                            <button is="emby-button" type="submit" class="raised button-submit block">
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="healthTab" class="tabContent" role="tabpanel" aria-hidden="true" hidden>
+                    <div class="verticalSection settingsCard">
+                        <h2>Tweaks Health & Self-Heal</h2>
+                        <div class="fieldDescription">
+                            Self-heal validates and repairs managed JavaScript Injector entries, then runs plugin health checks.
+                        </div>
+                        <div id="healthTimestamp" class="fieldDescription">Last health check: not yet available.</div>
+                        <div id="selfHealSummary" class="fieldDescription">Self-heal status unavailable.</div>
+                        <div id="selfHealActions" class="fieldDescription"></div>
+                        <div id="assetHealth" class="fieldDescription"></div>
+                        <div id="conflictWarnings" class="fieldDescription"></div>
+                        <button is="emby-button" id="runHealthCheckBtn" type="button" class="raised button-submit block">
+                            <span>Run Self-Heal & Health Check</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section id="diagnosticsTab" class="tabContent" role="tabpanel" aria-hidden="true" hidden>
+                    <div class="verticalSection settingsCard">
+                        <h2>Advanced Diagnostics</h2>
+                        <div class="fieldDescription">
+                            Use this data to verify runtime payload, dependency state, and managed JavaScript Injector entries.
+                        </div>
+                        <div id="diagSummaryLine" class="fieldDescription statusLine">Loading diagnostics...</div>
+
+                        <div class="fieldDescription">Runtime toggle payload:</div>
+                        <pre class="codeBlock"><code id="diagRuntimeConfig">loading...</code></pre>
+
+                        <div class="fieldDescription">Detected runtime state (<code>window.__altffourTweaksRuntimeState</code>):</div>
+                        <pre class="codeBlock"><code id="diagRuntimeState">loading...</code></pre>
+
+                        <div class="fieldDescription">Managed JavaScript Injector entries:</div>
+                        <pre class="codeBlock"><code id="diagManagedEntries">loading...</code></pre>
+
+                        <div class="fieldDescription">Dependency matrix:</div>
+                        <pre class="codeBlock"><code id="diagDependencyMatrix">loading...</code></pre>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            const PluginConfig = {
+                pluginId: "6ba080fc-ff40-4c6c-a59d-9874f96d4206",
+                javaScriptInjectorPluginId: "f5a34f7b-2e8a-4e6a-a722-3a216a81b374",
+                javaScriptInjectorPluginName: "JavaScript Injector",
+                javaScriptInjectorRepoUrl: "https://github.com/n00bcodr/Jellyfin-JavaScript-Injector",
+                brandingConfigKey: "branding",
+                brandingSettingsUrl: "/web/#/dashboard/general",
+                runtimeScriptUrl: "https://altffour.com/jellyfin-theme/add-ons/altffour-tweaks-plugin-latest-min.js",
+                mediaBarCssUrl: "https://altffour.com/jellyfin-theme/add-ons/media-bar-plugin-support-latest-min.css",
+                inPlayerCssUrl: "https://altffour.com/jellyfin-theme/add-ons/altffour-in-player-episode-preview-support-latest-min.css",
+                managedRuntimeEntryName: "Altffour Tweaks Plugin",
+                managedMediaBarEntryName: "Altffour Tweaks - Media Bar Support",
+                managedInPlayerEntryName: "Altffour Tweaks - In-Player Episode Preview Support",
+                brandingCssHints: [
+                    "stream.altffour.com/web/assets/altffour-theme",
+                    "altffour-theme",
+                    "elegantfin-theme",
+                    "altffour.com/jellyfin-theme"
+                ]
+            };
+
+            let pageRoot = null;
+            let currentPluginConfig = null;
+
+            function setPageRoot(root) {
+                if (root) {
+                    pageRoot = root;
+                }
+            }
+
+            function getPageRoot() {
+                if (pageRoot && pageRoot.isConnected) {
+                    return pageRoot;
+                }
+
+                const fromScript = document.currentScript && document.currentScript.closest('.configPage');
+                if (fromScript) {
+                    pageRoot = fromScript;
+                    return pageRoot;
+                }
+
+                const fallback = document.getElementById('configPage');
+                if (fallback) {
+                    pageRoot = fallback;
+                    return pageRoot;
+                }
+
+                return null;
+            }
+
+            function query(selector) {
+                const root = getPageRoot();
+                return root ? root.querySelector(selector) : null;
+            }
+
+            function setCheckboxValue(selector, value) {
+                const element = query(selector);
+                if (element) {
+                    element.checked = !!value;
+                }
+            }
+
+            function setSelectValue(selector, value, fallback) {
+                const element = query(selector);
+                if (!element) {
+                    return;
+                }
+
+                const desired = String(value || '').toLowerCase();
+                const options = Array.from(element.options || []);
+                const hasDesired = options.some(function (option) {
+                    return option && String(option.value || '').toLowerCase() === desired;
+                });
+
+                element.value = hasDesired ? desired : String(fallback || '');
+            }
+
+            function normalizeThemePalette(value) {
+                const allowed = ['ocean', 'graphite', 'emerald', 'sunset', 'crimson'];
+                const normalized = String(value || '').trim().toLowerCase();
+                return allowed.indexOf(normalized) !== -1 ? normalized : 'ocean';
+            }
+
+            function setText(selector, value) {
+                const element = query(selector);
+                if (element) {
+                    element.textContent = value || '';
+                }
+            }
+
+            function setHtml(selector, value) {
+                const element = query(selector);
+                if (element) {
+                    element.innerHTML = value || '';
+                }
+            }
+
+            function ensureRepoLink() {
+                const link = query('#jsInjectorRepoLink');
+                if (link) {
+                    link.href = PluginConfig.javaScriptInjectorRepoUrl;
+                }
+            }
+
+            function ensureBrandingSettingsLink() {
+                const link = query('#brandingSettingsLink');
+                if (link) {
+                    link.href = PluginConfig.brandingSettingsUrl;
+                }
+            }
+
+            function setStatus(lineSelector, detailSelector, state, lineText, detailText) {
+                const line = query(lineSelector);
+                const detail = query(detailSelector);
+                if (!line || !detail) {
+                    return;
+                }
+
+                line.textContent = lineText;
+                detail.textContent = detailText || '';
+
+                if (state === 'ok') {
+                    line.style.color = '#42d392';
+                } else if (state === 'warn') {
+                    line.style.color = '#f5c451';
+                } else if (state === 'error') {
+                    line.style.color = '#ff7b7b';
+                } else {
+                    line.style.color = '';
+                }
+            }
+
+            function setInjectorStatus(state, lineText, detailText) {
+                setStatus('#jsInjectorStatusLine', '#jsInjectorStatusDetail', state, lineText, detailText);
+            }
+
+            function setBrandingStatus(state, lineText, detailText) {
+                setStatus('#brandingCssStatusLine', '#brandingCssStatusDetail', state, lineText, detailText);
+            }
+
+            function setMessageState(selector, state, text) {
+                const element = query(selector);
+                if (!element) {
+                    return;
+                }
+
+                element.textContent = text || '';
+
+                if (state === 'ok') {
+                    element.style.color = '#42d392';
+                } else if (state === 'warn') {
+                    element.style.color = '#f5c451';
+                } else if (state === 'error') {
+                    element.style.color = '#ff7b7b';
+                } else {
+                    element.style.color = '';
+                }
+            }
+
+            function getRuntimeDependentToggles() {
+                return [
+                    query('#enableDynamicHomeSpacer'),
+                    query('#enableExtraCardButtonsVisibility')
+                ].filter(Boolean);
+            }
+
+            function getThemePaletteControl() {
+                return query('#themePalette');
+            }
+
+            function applyRuntimeGuardrailState(clearWhenOff) {
+                const runtimeToggle = query('#enableTweaksLoader');
+                if (!runtimeToggle) {
+                    return;
+                }
+
+                const runtimeEnabled = !!runtimeToggle.checked;
+                const dependentToggles = getRuntimeDependentToggles();
+                const themePaletteControl = getThemePaletteControl();
+
+                dependentToggles.forEach(function (toggle) {
+                    toggle.disabled = !runtimeEnabled;
+                    if (!runtimeEnabled && clearWhenOff) {
+                        toggle.checked = false;
+                    }
+                });
+
+                if (themePaletteControl) {
+                    themePaletteControl.disabled = !runtimeEnabled;
+                }
+
+                if (!runtimeEnabled) {
+                    setMessageState(
+                        '#runtimeGuardrailNote',
+                        'warn',
+                        clearWhenOff
+                            ? 'Runtime Injection was turned off. Runtime fixes were switched off and are disabled until Runtime Injection is enabled again.'
+                            : 'Runtime Injection is OFF. Runtime fixes are disabled until Runtime Injection is enabled.'
+                    );
+                } else {
+                    setMessageState('#runtimeGuardrailNote', 'ok', 'Runtime Injection is ON. Runtime fixes can be toggled.');
+                }
+            }
+
+            function renderTweaksDependencyState() {
+                const runtimeToggle = query('#enableTweaksLoader');
+                const dynamicSpacerToggle = query('#enableDynamicHomeSpacer');
+                const extraCardButtonsToggle = query('#enableExtraCardButtonsVisibility');
+                const themePaletteControl = getThemePaletteControl();
+
+                if (!runtimeToggle || !dynamicSpacerToggle || !extraCardButtonsToggle || !themePaletteControl) {
+                    return;
+                }
+
+                const runtimeEnabled = !!runtimeToggle.checked;
+                const injectorActive = !!(currentPluginConfig && currentPluginConfig.JavaScriptInjectorActive);
+                const selectedPalette = normalizeThemePalette(themePaletteControl.value);
+
+                if (!runtimeEnabled) {
+                    setMessageState('#dependencySummary', 'warn', 'Runtime Injection is OFF. JavaScript runtime fixes are inactive.');
+                    setMessageState('#dynamicSpacerDependencyNote', 'warn', 'Requires Runtime Injection.');
+                    setMessageState('#extraCardButtonsDependencyNote', 'warn', 'Requires Runtime Injection.');
+                    setMessageState('#themePaletteDependencyNote', 'warn', 'Requires Runtime Injection.');
+                } else {
+                    setMessageState('#dependencySummary', 'ok', 'Runtime Injection is ON. JavaScript runtime fixes can run.');
+                    setMessageState(
+                        '#dynamicSpacerDependencyNote',
+                        dynamicSpacerToggle.checked ? 'ok' : 'info',
+                        dynamicSpacerToggle.checked ? 'Dynamic home spacer fix is active.' : 'Dynamic home spacer fix is off.'
+                    );
+                    setMessageState(
+                        '#extraCardButtonsDependencyNote',
+                        extraCardButtonsToggle.checked ? 'ok' : 'info',
+                        extraCardButtonsToggle.checked
+                            ? 'Extra card options button visibility is active.'
+                            : 'Extra card options button visibility is off.'
+                    );
+                    setMessageState('#themePaletteDependencyNote', 'ok', 'Current palette: ' + selectedPalette + '.');
+                }
+
+                if (!injectorActive) {
+                    setMessageState('#cssAddonsDependencyNote', 'warn', 'CSS add-ons require JavaScript Injector to be active.');
+                } else {
+                    setMessageState('#cssAddonsDependencyNote', 'ok', 'JavaScript Injector is active, so CSS add-ons can run when enabled.');
+                }
+            }
+
+            function bindTweaksDependencyHandlers() {
+                const runtimeToggle = query('#enableTweaksLoader');
+                const dependentToggles = getRuntimeDependentToggles();
+                const themePaletteControl = getThemePaletteControl();
+
+                if (!runtimeToggle) {
+                    return;
+                }
+
+                if (runtimeToggle.dataset.altffourDependencyBound !== 'true') {
+                    runtimeToggle.dataset.altffourDependencyBound = 'true';
+                    runtimeToggle.addEventListener('change', function () {
+                        applyRuntimeGuardrailState(true);
+                        renderTweaksDependencyState();
+                        renderDiagnostics(currentPluginConfig || {});
+                    });
+                }
+
+                dependentToggles.forEach(function (toggle) {
+                    if (toggle.dataset.altffourDependencyBound === 'true') {
+                        return;
+                    }
+
+                    toggle.dataset.altffourDependencyBound = 'true';
+                    toggle.addEventListener('change', function () {
+                        renderTweaksDependencyState();
+                        renderDiagnostics(currentPluginConfig || {});
+                    });
+                });
+
+                if (themePaletteControl && themePaletteControl.dataset.altffourDependencyBound !== 'true') {
+                    themePaletteControl.dataset.altffourDependencyBound = 'true';
+                    themePaletteControl.addEventListener('change', function () {
+                        renderTweaksDependencyState();
+                        renderDiagnostics(currentPluginConfig || {});
+                    });
+                }
+            }
+
+            function setupTabs(page) {
+                const host = page || getPageRoot();
+                if (!host || host.dataset.altffourTabsBound === 'true') {
+                    return;
+                }
+
+                host.dataset.altffourTabsBound = 'true';
+                const buttons = Array.from(host.querySelectorAll('.emby-tab-button[data-tab-target]'));
+
+                function activateTab(button) {
+                    const targetId = button ? button.getAttribute('data-tab-target') : '';
+                    if (!targetId) {
+                        return;
+                    }
+
+                    buttons.forEach(function (item) {
+                        const isActive = item === button;
+                        item.classList.toggle('emby-tab-button-active', isActive);
+                        item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                    });
+
+                    host.querySelectorAll('.tabContent').forEach(function (panel) {
+                        const isActive = panel.id === targetId;
+                        panel.classList.toggle('is-active', isActive);
+                        panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+                        panel.hidden = !isActive;
+                        panel.style.display = isActive ? '' : 'none';
+                    });
+                }
+
+                buttons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        activateTab(button);
+                    });
+                });
+
+                const initial = buttons.find(function (button) {
+                    return button.classList.contains('emby-tab-button-active');
+                }) || buttons[0];
+
+                if (initial) {
+                    activateTab(initial);
+                }
+            }
+
+            function normalizePluginsResponse(response) {
+                if (Array.isArray(response)) {
+                    return response;
+                }
+
+                if (response && Array.isArray(response.Items)) {
+                    return response.Items;
+                }
+
+                return [];
+            }
+
+            function fetchPlugins() {
+                if (typeof ApiClient.getPlugins === 'function') {
+                    return ApiClient.getPlugins();
+                }
+
+                return ApiClient.fetch({
+                    url: ApiClient.getUrl('Plugins'),
+                    dataType: 'json',
+                    type: 'GET',
+                    headers: { accept: 'application/json' }
+                });
+            }
+
+            function resolvePluginStatus(plugin) {
+                const raw = (plugin && (plugin.Status || plugin.status)) || '';
+                return String(raw).toLowerCase();
+            }
+
+            function checkJavaScriptInjectorStatus() {
+                setInjectorStatus('info', 'Checking JavaScript Injector status...', '');
+
+                return fetchPlugins().then(function (response) {
+                    const plugins = normalizePluginsResponse(response);
+                    const injectorPlugin = plugins.find(function (plugin) {
+                        const id = String(plugin.Id || plugin.id || '').toLowerCase();
+                        const name = String(plugin.Name || plugin.name || '').toLowerCase();
+                        return id === PluginConfig.javaScriptInjectorPluginId || name === PluginConfig.javaScriptInjectorPluginName.toLowerCase();
+                    });
+
+                    if (!injectorPlugin) {
+                        setInjectorStatus(
+                            'error',
+                            'JavaScript Injector is not installed.',
+                            'UI injections are unavailable until JavaScript Injector is installed and enabled.'
+                        );
+                        return;
+                    }
+
+                    const status = resolvePluginStatus(injectorPlugin);
+                    const version = String(injectorPlugin.Version || injectorPlugin.version || 'unknown');
+
+                    if (status === 'active') {
+                        setInjectorStatus('ok', 'JavaScript Injector is installed and active.', 'UI injection features are available. Detected version: ' + version + '.');
+                        return;
+                    }
+
+                    if (status === 'restart') {
+                        setInjectorStatus('warn', 'JavaScript Injector is installed but pending restart.', 'Restart Jellyfin to activate UI injection features.');
+                        return;
+                    }
+
+                    if (status === 'disabled') {
+                        setInjectorStatus('error', 'JavaScript Injector is installed but disabled.', 'Enable JavaScript Injector to use UI injection features.');
+                        return;
+                    }
+
+                    setInjectorStatus('warn', 'JavaScript Injector is installed but not active (' + status + ').', 'UI injections may not run until the plugin is active.');
+                }, function () {
+                    setInjectorStatus('warn', 'Unable to verify JavaScript Injector status.', 'Could not query the Jellyfin plugin API. Verify plugin state from Dashboard > Plugins.');
+                });
+            }
+
+            function fetchNamedConfiguration(key) {
+                if (typeof ApiClient.getNamedConfiguration === 'function') {
+                    return ApiClient.getNamedConfiguration(key);
+                }
+
+                return ApiClient.fetch({
+                    url: ApiClient.getUrl('System/Configuration/' + encodeURIComponent(key)),
+                    dataType: 'json',
+                    type: 'GET',
+                    headers: { accept: 'application/json' }
+                });
+            }
+
+            function fetchServerConfiguration() {
+                if (typeof ApiClient.getSystemConfiguration === 'function') {
+                    return ApiClient.getSystemConfiguration();
+                }
+
+                if (typeof ApiClient.getConfiguration === 'function') {
+                    return ApiClient.getConfiguration();
+                }
+
+                return ApiClient.fetch({
+                    url: ApiClient.getUrl('System/Configuration'),
+                    dataType: 'json',
+                    type: 'GET',
+                    headers: { accept: 'application/json' }
+                });
+            }
+
+            function extractBrandingCssValue(config) {
+                if (!config || typeof config !== 'object') {
+                    return '';
+                }
+
+                const keyCandidates = ['CustomCss', 'customCss', 'UICustomCss', 'uiCustomCss', 'BrandingCss', 'brandingCss'];
+                for (const key of keyCandidates) {
+                    const value = config[key];
+                    if (typeof value === 'string') {
+                        return value.trim();
+                    }
+                }
+
+                const nestedCandidates = ['Branding', 'branding', 'BrandingOptions', 'brandingOptions'];
+                for (const nestedKey of nestedCandidates) {
+                    const nested = config[nestedKey];
+                    if (nested && typeof nested === 'object') {
+                        const nestedValue = extractBrandingCssValue(nested);
+                        if (nestedValue) {
+                            return nestedValue;
+                        }
+                    }
+                }
+
+                return '';
+            }
+
+            function fetchBrandingCssValue() {
+                return fetchNamedConfiguration(PluginConfig.brandingConfigKey).then(function (config) {
+                    const namedValue = extractBrandingCssValue(config);
+                    if (namedValue) {
+                        return namedValue;
+                    }
+
+                    return fetchServerConfiguration().then(function (serverConfig) {
+                        return extractBrandingCssValue(serverConfig);
+                    }, function () {
+                        return '';
+                    });
+                }, function () {
+                    return fetchServerConfiguration().then(function (serverConfig) {
+                        return extractBrandingCssValue(serverConfig);
+                    }, function () {
+                        return '';
+                    });
+                });
+            }
+
+            function normalizeInlineText(value) {
+                return String(value || '').replace(/\s+/g, ' ').trim();
+            }
+
+            function checkBrandingCssStatus() {
+                setBrandingStatus('info', 'Checking Branding Custom CSS...', '');
+                setText('#brandingCssCurrentValueCode', 'checking...');
+
+                return fetchBrandingCssValue().then(function (cssValue) {
+                    const normalized = normalizeInlineText(cssValue);
+                    setText('#brandingCssCurrentValueCode', normalized || '(empty)');
+
+                    if (!normalized) {
+                        setBrandingStatus('warn', 'Branding Custom CSS is empty.', 'Set Dashboard > General > Custom CSS to load the Altffour main theme.');
+                        return;
+                    }
+
+                    const normalizedLower = normalized.toLowerCase();
+                    const looksLikeAltffourTheme = PluginConfig.brandingCssHints.some(function (hint) {
+                        return normalizedLower.indexOf(String(hint).toLowerCase()) !== -1;
+                    });
+
+                    if (looksLikeAltffourTheme) {
+                        setBrandingStatus('ok', 'Branding Custom CSS looks correct for Altffour.', 'Main theme CSS appears configured.');
+                        return;
+                    }
+
+                    setBrandingStatus('warn', 'Branding Custom CSS is set but does not look like Altffour.', 'If this is intentional, ignore this warning. Otherwise update the Custom CSS import.');
+                }, function () {
+                    setBrandingStatus('warn', 'Unable to verify Branding Custom CSS.', 'Check Dashboard > General and confirm Custom CSS includes your Altffour theme import.');
+                    setText('#brandingCssCurrentValueCode', 'unavailable');
+                });
+            }
+
+            function formatAssetLine(name, healthy, code, error) {
+                const statusLabel = healthy ? 'OK' : 'FAIL';
+                const codeText = code ? (' (HTTP ' + code + ')') : '';
+                const errorText = error ? (' - ' + error) : '';
+                return name + ': ' + statusLabel + codeText + errorText;
+            }
+
+            function renderHealthFromConfig(config) {
+                const timestamp = config.LastHealthCheckUtc ? new Date(config.LastHealthCheckUtc).toLocaleString() : 'not yet available';
+                setText('#healthTimestamp', 'Last health check: ' + timestamp);
+
+                const selfHealStatus = config.LastSelfHealHadChanges
+                    ? 'Self-heal applied updates.'
+                    : 'Self-heal did not need changes.';
+                const selfHealSummary = config.LastSelfHealSummary ? (' ' + config.LastSelfHealSummary) : '';
+                setText('#selfHealSummary', selfHealStatus + selfHealSummary);
+
+                const actions = Array.isArray(config.LastSelfHealActions) ? config.LastSelfHealActions : [];
+                if (actions.length) {
+                    setHtml('#selfHealActions', 'Last self-heal actions:<br>' + actions.map(function (item) { return '- ' + item; }).join('<br>'));
+                } else {
+                    setText('#selfHealActions', 'Last self-heal actions: none.');
+                }
+
+                const assetsText = [
+                    formatAssetLine('Runtime script', config.RuntimeAssetHealthy, config.RuntimeAssetStatusCode, config.RuntimeAssetError),
+                    formatAssetLine('Media Bar support CSS', config.MediaBarAssetHealthy, config.MediaBarAssetStatusCode, config.MediaBarAssetError),
+                    formatAssetLine('In-Player support CSS', config.InPlayerAssetHealthy, config.InPlayerAssetStatusCode, config.InPlayerAssetError)
+                ].join(' | ');
+                setText('#assetHealth', 'Theme asset checks: ' + assetsText);
+
+                const conflicts = Array.isArray(config.ConflictWarnings) ? config.ConflictWarnings : [];
+                if (conflicts.length) {
+                    setHtml('#conflictWarnings', 'Detected conflicts/warnings:<br>' + conflicts.map(function (item) { return '- ' + item; }).join('<br>'));
+                } else {
+                    setText('#conflictWarnings', 'Detected conflicts/warnings: none.');
+                }
+            }
+
+            function renderDiagnostics(config) {
+                const runtimePayload = {
+                    enableTweaksLoader: !!(query('#enableTweaksLoader') && query('#enableTweaksLoader').checked),
+                    enableDynamicHomeSpacer: !!(query('#enableDynamicHomeSpacer') && query('#enableDynamicHomeSpacer').checked),
+                    enableExtraCardButtonsVisibility: !!(query('#enableExtraCardButtonsVisibility') && query('#enableExtraCardButtonsVisibility').checked),
+                    themePalette: normalizeThemePalette(query('#themePalette') && query('#themePalette').value),
+                    enableMediaBarPluginSupport: !!(query('#enableMediaBarPluginSupport') && query('#enableMediaBarPluginSupport').checked),
+                    enableInPlayerEpisodePreviewSupport: !!(query('#enableInPlayerEpisodePreviewSupport') && query('#enableInPlayerEpisodePreviewSupport').checked)
+                };
+                setText('#diagRuntimeConfig', JSON.stringify(runtimePayload, null, 2));
+
+                const runtimeState = window.__altffourTweaksRuntimeState || null;
+                if (runtimeState) {
+                    setText('#diagRuntimeState', JSON.stringify(runtimeState, null, 2));
+                } else {
+                    setText('#diagRuntimeState', 'Runtime state object not currently present in this dashboard context.\nThis is expected if runtime script has not run on this page.');
+                }
+
+                const managedEntriesText = [
+                    'Config file found: ' + (!!config.JavaScriptInjectorConfigFound),
+                    '',
+                    PluginConfig.managedRuntimeEntryName + ':',
+                    '  ' + PluginConfig.runtimeScriptUrl,
+                    '',
+                    PluginConfig.managedMediaBarEntryName + ':',
+                    '  ' + PluginConfig.mediaBarCssUrl,
+                    '',
+                    PluginConfig.managedInPlayerEntryName + ':',
+                    '  ' + PluginConfig.inPlayerCssUrl
+                ].join('\n');
+                setText('#diagManagedEntries', managedEntriesText);
+
+                const matrix = [
+                    'JavaScript Injector active: ' + (!!config.JavaScriptInjectorActive),
+                    'Runtime Injection enabled: ' + (!!runtimePayload.enableTweaksLoader),
+                    'Runtime dynamic spacer enabled: ' + (!!runtimePayload.enableDynamicHomeSpacer),
+                    'Runtime extra card options visibility enabled: ' + (!!runtimePayload.enableExtraCardButtonsVisibility),
+                    'Runtime theme palette: ' + runtimePayload.themePalette,
+                    'Media Bar CSS add-on enabled: ' + (!!runtimePayload.enableMediaBarPluginSupport),
+                    'In-Player CSS add-on enabled: ' + (!!runtimePayload.enableInPlayerEpisodePreviewSupport),
+                    'Runtime asset healthy: ' + (!!config.RuntimeAssetHealthy),
+                    'Media Bar CSS healthy: ' + (!!config.MediaBarAssetHealthy),
+                    'In-Player CSS healthy: ' + (!!config.InPlayerAssetHealthy)
+                ].join('\n');
+                setText('#diagDependencyMatrix', matrix);
+
+                if (!config.JavaScriptInjectorActive) {
+                    setMessageState('#diagSummaryLine', 'warn', 'Diagnostics warning: JavaScript Injector is not active. Runtime and CSS injections may not execute.');
+                } else if (!runtimePayload.enableTweaksLoader) {
+                    setMessageState('#diagSummaryLine', 'warn', 'Diagnostics warning: Runtime Injection is off, so runtime JavaScript fixes are disabled.');
+                } else {
+                    setMessageState('#diagSummaryLine', 'ok', 'Diagnostics healthy: dependencies are active for runtime JavaScript fixes.');
+                }
+            }
+
+            function loadPluginConfig() {
+                return ApiClient.getPluginConfiguration(PluginConfig.pluginId).then(function (config) {
+                    currentPluginConfig = config;
+                    setCheckboxValue('#enableTweaksLoader', config.EnableTweaksLoader);
+                    setCheckboxValue('#enableDynamicHomeSpacer', config.EnableDynamicHomeSpacer);
+                    setCheckboxValue('#enableExtraCardButtonsVisibility', config.EnableExtraCardButtonsVisibility);
+                    setSelectValue('#themePalette', normalizeThemePalette(config.ThemePalette), 'ocean');
+                    setCheckboxValue('#enableMediaBarPluginSupport', config.EnableMediaBarPluginSupport);
+                    setCheckboxValue('#enableInPlayerEpisodePreviewSupport', config.EnableInPlayerEpisodePreviewSupport);
+
+                    bindTweaksDependencyHandlers();
+                    applyRuntimeGuardrailState(false);
+                    renderTweaksDependencyState();
+                    renderHealthFromConfig(config);
+                    renderDiagnostics(config);
+                    return config;
+                }, function () {
+                    Dashboard.alert('Failed to load Altffour Tweaks configuration.');
+                    return null;
+                });
+            }
+
+            function runHealthCheckAndSelfHeal() {
+                const button = query('#runHealthCheckBtn');
+                if (button) {
+                    button.disabled = true;
+                }
+
+                Dashboard.showLoadingMsg();
+                return ApiClient.getPluginConfiguration(PluginConfig.pluginId).then(function (config) {
+                    return ApiClient.updatePluginConfiguration(PluginConfig.pluginId, config);
+                }).then(function () {
+                    return Promise.all([
+                        loadPluginConfig(),
+                        checkJavaScriptInjectorStatus(),
+                        checkBrandingCssStatus()
+                    ]);
+                }).finally(function () {
+                    Dashboard.hideLoadingMsg();
+                    if (button) {
+                        button.disabled = false;
+                    }
+                });
+            }
+
+            function loadConfig() {
+                Dashboard.showLoadingMsg();
+                ensureRepoLink();
+                ensureBrandingSettingsLink();
+                setupTabs(getPageRoot());
+                bindTweaksDependencyHandlers();
+
+                Promise.all([
+                    loadPluginConfig().catch(function () { }),
+                    checkJavaScriptInjectorStatus().catch(function () { }),
+                    checkBrandingCssStatus().catch(function () { })
+                ]).then(function () {
+                    Dashboard.hideLoadingMsg();
+                });
+            }
+
+            const page = (document.currentScript && document.currentScript.closest('.configPage'))
+                || document.getElementById('configPage')
+                || document.querySelector('.configPage');
+
+            if (page) {
+                setPageRoot(page);
+                setupTabs(page);
+                page.addEventListener('pageshow', loadConfig);
+                page.addEventListener('viewshow', loadConfig);
+            }
+
+            const runHealthCheckBtn = query('#runHealthCheckBtn');
+            if (runHealthCheckBtn) {
+                runHealthCheckBtn.addEventListener('click', function () {
+                    runHealthCheckAndSelfHeal().catch(function () {
+                        Dashboard.hideLoadingMsg();
+                        Dashboard.alert('Failed to run self-heal and health checks.');
+                    });
+                });
+            }
+
+            const configForm = query('.configForm');
+            if (configForm) {
+                configForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    Dashboard.showLoadingMsg();
+                    ApiClient.getPluginConfiguration(PluginConfig.pluginId).then(function (config) {
+                        const runtimeEnabled = !!(query('#enableTweaksLoader') && query('#enableTweaksLoader').checked);
+                        const dynamicSpacerEnabled = runtimeEnabled && !!(query('#enableDynamicHomeSpacer') && query('#enableDynamicHomeSpacer').checked);
+                        const extraCardButtonsVisibilityEnabled = runtimeEnabled && !!(query('#enableExtraCardButtonsVisibility') && query('#enableExtraCardButtonsVisibility').checked);
+
+                        config.EnableTweaksLoader = runtimeEnabled;
+                        config.EnableDynamicHomeSpacer = dynamicSpacerEnabled;
+                        config.EnableExtraCardButtonsVisibility = extraCardButtonsVisibilityEnabled;
+                        config.ThemePalette = normalizeThemePalette(query('#themePalette') && query('#themePalette').value);
+                        config.EnableMediaBarPluginSupport = !!(query('#enableMediaBarPluginSupport') && query('#enableMediaBarPluginSupport').checked);
+                        config.EnableInPlayerEpisodePreviewSupport = !!(query('#enableInPlayerEpisodePreviewSupport') && query('#enableInPlayerEpisodePreviewSupport').checked);
+
+                        ApiClient.updatePluginConfiguration(PluginConfig.pluginId, config).then(function (result) {
+                            Dashboard.processPluginConfigurationUpdateResult(result);
+                            Promise.all([
+                                loadPluginConfig().catch(function () { }),
+                                checkJavaScriptInjectorStatus().catch(function () { }),
+                                checkBrandingCssStatus().catch(function () { })
+                            ]).finally(function () {
+                                Dashboard.hideLoadingMsg();
+                            });
+                        }, function () {
+                            Dashboard.hideLoadingMsg();
+                            Dashboard.alert('Failed to save Altffour Tweaks configuration.');
+                        });
+                    }, function () {
+                        Dashboard.hideLoadingMsg();
+                        Dashboard.alert('Failed to load Altffour Tweaks configuration before saving.');
+                    });
+
+                    return false;
+                });
+            }
+        </script>
+    </div>
+</body>
+</html>
