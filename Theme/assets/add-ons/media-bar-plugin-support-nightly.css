@@ -90,11 +90,11 @@
 
 /* Media Bar home handoff spacing: push home rows clearly below the hero. */
 .layout-desktop {
-    --homePageTopGap: 22em !important;
+    --homePageTopGap: 20em !important;
 }
 
 .layout-mobile {
-    --homePageTopGap: 24em !important;
+    --homePageTopGap: 22em !important;
 }
 
 @media only screen and (max-width: 767px) and (orientation: portrait) {
