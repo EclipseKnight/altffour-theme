@@ -9,7 +9,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
-    --altffourFooterText: "Altffour Theme Latest • v1.0.52 (Compat)";
+    --altffourFooterText: "Altffour Theme v1.0.52 (Compat)";
 
     /* Base theme colors */
     color-scheme: dark;
@@ -4353,8 +4353,8 @@ body {
     padding: 0 !important;
 }
 
-.headerRight .headerButton:not(.headerUserButton),
-.headerRight .paper-icon-button-light:not(.headerUserButton) {
+.headerRight > .headerButton:not(.headerUserButton),
+.headerRight > .paper-icon-button-light:not(.headerUserButton) {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
@@ -4374,12 +4374,12 @@ body {
 }
 
 .headerRight .paper-icon-button-light .material-icons,
-.headerRight .headerButton:not(.headerUserButton) .material-icons {
+.headerRight > .headerButton:not(.headerUserButton) .material-icons {
     font-size: 1.24rem !important;
 }
 
-.headerRight .headerButton:not(.headerUserButton):hover,
-.headerRight .paper-icon-button-light:not(.headerUserButton):hover,
+.headerRight > .headerButton:not(.headerUserButton):hover,
+.headerRight > .paper-icon-button-light:not(.headerUserButton):hover,
 .headerRight .headerUserButton:hover {
     background: rgba(255, 255, 255, 0.12) !important;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
@@ -4439,8 +4439,8 @@ body {
 }
 
 .headerButton:not(.headerUserButton):hover,
-.headerRight .paper-icon-button-light:not(.headerUserButton):hover,
-.headerRight .headerButton:not(.headerUserButton):hover,
+.headerRight > .paper-icon-button-light:not(.headerUserButton):hover,
+.headerRight > .headerButton:not(.headerUserButton):hover,
 .headerUserButton:hover,
 .headerTop .paper-icon-button-light:hover {
     transform: translateY(-2px);
@@ -4462,11 +4462,11 @@ body {
 }
 
 /* keep top-right controls borderless even on hover/focus */
-.headerRight .headerButton:not(.headerUserButton):hover,
-.headerRight .paper-icon-button-light:not(.headerUserButton):hover,
+.headerRight > .headerButton:not(.headerUserButton):hover,
+.headerRight > .paper-icon-button-light:not(.headerUserButton):hover,
 .headerRight .headerUserButton:hover,
-.headerRight .headerButton:not(.headerUserButton).show-focus:focus,
-.headerRight .paper-icon-button-light:not(.headerUserButton).show-focus:focus,
+.headerRight > .headerButton:not(.headerUserButton).show-focus:focus,
+.headerRight > .paper-icon-button-light:not(.headerUserButton).show-focus:focus,
 .headerRight .headerUserButton.show-focus:focus {
     box-shadow: none !important;
     border: none !important;
@@ -4508,14 +4508,14 @@ body {
 }
 
 /* Top-right controls: no individual borders, keep only group capsule border */
-.headerRight .headerButton:not(.headerUserButton),
-.headerRight .paper-icon-button-light:not(.headerUserButton),
+.headerRight > .headerButton:not(.headerUserButton),
+.headerRight > .paper-icon-button-light:not(.headerUserButton),
 .headerRight .headerUserButton,
-.headerRight .headerButton:not(.headerUserButton)::before,
-.headerRight .paper-icon-button-light:not(.headerUserButton)::before,
+.headerRight > .headerButton:not(.headerUserButton)::before,
+.headerRight > .paper-icon-button-light:not(.headerUserButton)::before,
 .headerRight .headerUserButton::before,
-.headerRight .headerButton:not(.headerUserButton)::after,
-.headerRight .paper-icon-button-light:not(.headerUserButton)::after,
+.headerRight > .headerButton:not(.headerUserButton)::after,
+.headerRight > .paper-icon-button-light:not(.headerUserButton)::after,
 .headerRight .headerUserButton::after {
     border: none !important;
     border-color: transparent !important;
@@ -4523,8 +4523,8 @@ body {
     outline: none !important;
 }
 
-.headerRight .headerButton:not(.headerUserButton),
-.headerRight .paper-icon-button-light:not(.headerUserButton) {
+.headerRight > .headerButton:not(.headerUserButton),
+.headerRight > .paper-icon-button-light:not(.headerUserButton) {
     background: transparent !important;
 }
 
@@ -4542,8 +4542,8 @@ body {
 }
 
 /* Final top-right lock-in: no per-icon border, always circular controls */
-.headerRight .headerButton:not(.headerUserButton),
-.headerRight .paper-icon-button-light:not(.headerUserButton),
+.headerRight > .headerButton:not(.headerUserButton),
+.headerRight > .paper-icon-button-light:not(.headerUserButton),
 .headerRight .headerUserButton {
     display: inline-flex !important;
     align-items: center !important;
@@ -4564,11 +4564,11 @@ body {
     -webkit-backdrop-filter: none !important;
 }
 
-.headerRight .headerButton:not(.headerUserButton):hover,
-.headerRight .paper-icon-button-light:not(.headerUserButton):hover,
+.headerRight > .headerButton:not(.headerUserButton):hover,
+.headerRight > .paper-icon-button-light:not(.headerUserButton):hover,
 .headerRight .headerUserButton:hover,
-.headerRight .headerButton:not(.headerUserButton):focus,
-.headerRight .paper-icon-button-light:not(.headerUserButton):focus,
+.headerRight > .headerButton:not(.headerUserButton):focus,
+.headerRight > .paper-icon-button-light:not(.headerUserButton):focus,
 .headerRight .headerUserButton:focus {
     border: none !important;
     border-color: transparent !important;
@@ -4780,8 +4780,8 @@ body {
         margin: 0 0.05rem !important;
     }
 
-    .layout-mobile .headerRight .headerButton:not(.headerUserButton),
-    .layout-mobile .headerRight .paper-icon-button-light:not(.headerUserButton),
+    .layout-mobile .headerRight > .headerButton:not(.headerUserButton),
+    .layout-mobile .headerRight > .paper-icon-button-light:not(.headerUserButton),
     .layout-mobile .headerRight .headerUserButton {
         width: var(--mobileHeaderRightButtonSize) !important;
         height: var(--mobileHeaderRightButtonSize) !important;
@@ -4798,9 +4798,9 @@ body {
     }
 
     .layout-mobile .headerRight .paper-icon-button-light .material-icons,
-    .layout-mobile .headerRight .headerButton:not(.headerUserButton) .material-icons,
+    .layout-mobile .headerRight > .headerButton:not(.headerUserButton) .material-icons,
     .layout-mobile .headerRight .paper-icon-button-light .materialIcon,
-    .layout-mobile .headerRight .headerButton:not(.headerUserButton) .materialIcon {
+    .layout-mobile .headerRight > .headerButton:not(.headerUserButton) .materialIcon {
         font-size: var(--mobileHeaderRightIconSize) !important;
     }
 
@@ -4884,11 +4884,11 @@ body {
         margin: 0 0.04rem !important;
     }
 
-    body.libraryDocument .layout-mobile .headerRight .headerButton:not(.headerUserButton),
-    body.libraryDocument .layout-mobile .headerRight .paper-icon-button-light:not(.headerUserButton),
+    body.libraryDocument .layout-mobile .headerRight > .headerButton:not(.headerUserButton),
+    body.libraryDocument .layout-mobile .headerRight > .paper-icon-button-light:not(.headerUserButton),
     body.libraryDocument .layout-mobile .headerRight .headerUserButton,
-    body.libraryDocument .headerRight .headerButton:not(.headerUserButton),
-    body.libraryDocument .headerRight .paper-icon-button-light:not(.headerUserButton),
+    body.libraryDocument .headerRight > .headerButton:not(.headerUserButton),
+    body.libraryDocument .headerRight > .paper-icon-button-light:not(.headerUserButton),
     body.libraryDocument .headerRight .headerUserButton {
         width: var(--mobileHeaderRightButtonSize) !important;
         height: var(--mobileHeaderRightButtonSize) !important;
@@ -5030,8 +5030,8 @@ body {
         min-height: var(--mobileHeaderLeftButtonSize) !important;
     }
 
-    .layout-mobile .headerRight .headerButton:not(.headerUserButton),
-    .layout-mobile .headerRight .paper-icon-button-light:not(.headerUserButton),
+    .layout-mobile .headerRight > .headerButton:not(.headerUserButton),
+    .layout-mobile .headerRight > .paper-icon-button-light:not(.headerUserButton),
     .layout-mobile .headerRight .headerUserButton {
         width: var(--mobileHeaderRightButtonSize) !important;
         height: var(--mobileHeaderRightButtonSize) !important;
@@ -5074,8 +5074,8 @@ body {
         min-height: var(--mobileHeaderLeftButtonSize) !important;
     }
 
-    .layout-mobile .headerRight .headerButton:not(.headerUserButton),
-    .layout-mobile .headerRight .paper-icon-button-light:not(.headerUserButton),
+    .layout-mobile .headerRight > .headerButton:not(.headerUserButton),
+    .layout-mobile .headerRight > .paper-icon-button-light:not(.headerUserButton),
     .layout-mobile .headerRight .headerUserButton {
         width: var(--mobileHeaderRightButtonSize) !important;
         height: var(--mobileHeaderRightButtonSize) !important;
@@ -5168,8 +5168,8 @@ body {
 
     .layout-desktop .headerLeft .headerButton:not(.headerUserButton),
     .layout-desktop .headerLeft .paper-icon-button-light:not(.headerUserButton),
-    .layout-desktop .headerRight .headerButton:not(.headerUserButton),
-    .layout-desktop .headerRight .paper-icon-button-light:not(.headerUserButton),
+    .layout-desktop .headerRight > .headerButton:not(.headerUserButton),
+    .layout-desktop .headerRight > .paper-icon-button-light:not(.headerUserButton),
     .layout-desktop .headerRight .headerUserButton {
         width: var(--desktopHeaderButtonSize) !important;
         height: var(--desktopHeaderButtonSize) !important;
@@ -5216,10 +5216,10 @@ body {
     .layout-desktop .headerLeft .paper-icon-button-light:not(.headerUserButton) .material-icons,
     .layout-desktop .headerLeft .headerButton:not(.headerUserButton) .materialIcon,
     .layout-desktop .headerLeft .paper-icon-button-light:not(.headerUserButton) .materialIcon,
-    .layout-desktop .headerRight .headerButton:not(.headerUserButton) .material-icons,
-    .layout-desktop .headerRight .paper-icon-button-light:not(.headerUserButton) .material-icons,
-    .layout-desktop .headerRight .headerButton:not(.headerUserButton) .materialIcon,
-    .layout-desktop .headerRight .paper-icon-button-light:not(.headerUserButton) .materialIcon {
+    .layout-desktop .headerRight > .headerButton:not(.headerUserButton) .material-icons,
+    .layout-desktop .headerRight > .paper-icon-button-light:not(.headerUserButton) .material-icons,
+    .layout-desktop .headerRight > .headerButton:not(.headerUserButton) .materialIcon,
+    .layout-desktop .headerRight > .paper-icon-button-light:not(.headerUserButton) .materialIcon {
         font-size: var(--desktopHeaderIconSize) !important;
     }
 
@@ -5270,3 +5270,128 @@ body {
 }
 
 /* Altffour Glass Layer - end */
+
+
+/* v1.0.63: consolidated profile/header controls fix block */
+.headerRight {
+    overflow: visible !important;
+}
+
+.headerRight > .headerUserButton {
+    order: 999 !important;
+    flex: 0 0 auto !important;
+    position: relative !important;
+    color: rgba(245, 250, 255, 0.98) !important;
+}
+
+.headerRight > .headerRequestsButton {
+    order: 998 !important;
+    flex: 0 0 auto !important;
+}
+
+@media (max-width: 900px) {
+    .headerRight > .headerRequestsButton {
+        display: none !important;
+    }
+}
+
+/* keep only one visible header user button */
+.headerRight > .headerUserButton:not(.hide):not(:last-of-type) {
+    display: none !important;
+}
+
+/* hide nested avatar node that duplicates ring in this Jellyfin build */
+.headerRight > .headerUserButton > .headerUserButtonRound {
+    display: none !important;
+}
+
+/* explicit fallback icon */
+.headerRight > .headerUserButton::after {
+    content: "person";
+    font-family: "Material Icons";
+    position: absolute;
+    inset: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.28rem;
+    line-height: 1;
+    color: rgba(245, 250, 255, 0.98);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* v1.0.64: settings/dashboard menu rows - clean style with soft hover (no hard borders) */
+#myPreferencesMenuPage .listItem,
+#myPreferencesMenuPage .navMenuOption,
+.dashboardDocument .listItem,
+.dashboardDocument .navMenuOption {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    transition: background-color 180ms ease, transform 160ms ease;
+}
+
+#myPreferencesMenuPage .listItem-border,
+#myPreferencesMenuPage .navMenuOption::before,
+#myPreferencesMenuPage .navMenuOption::after,
+.dashboardDocument .listItem-border,
+.dashboardDocument .navMenuOption::before,
+.dashboardDocument .navMenuOption::after {
+    border: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+#myPreferencesMenuPage .listItem:hover,
+#myPreferencesMenuPage .navMenuOption:hover,
+.dashboardDocument .listItem:hover,
+.dashboardDocument .navMenuOption:hover {
+    background: rgba(255, 255, 255, 0.075) !important;
+    transform: none !important;
+}
+
+#myPreferencesMenuPage .listItem:active,
+#myPreferencesMenuPage .navMenuOption:active,
+.dashboardDocument .listItem:active,
+.dashboardDocument .navMenuOption:active {
+    background: rgba(255, 255, 255, 0.11) !important;
+}
+
+#myPreferencesMenuPage .navMenuOption-selected,
+.dashboardDocument .navMenuOption-selected {
+    background: rgba(124, 164, 255, 0.22) !important;
+    color: rgba(245, 250, 255, 0.98) !important;
+}
+
+/* altffour-home-row-bg-fix-20260310 */
+html.preload.layout-desktop,
+html.preload.layout-desktop body,
+html.layout-desktop,
+html.layout-desktop body,
+.backgroundContainer:not(.withBackdrop),
+.backgroundContainer:not(.withBackdrop):not(.backgroundContainer-transparent) {
+  background: var(--darkerGradientPoint) !important;
+  background-image: none !important;
+}
+#homeTab .sections,
+#homeTab .homeSectionsContainer,
+#homeTab .verticalSection,
+#homeTab .verticalSection.section2,
+#homeTab .verticalSection.ContinueWatching.section2,
+#homeTab .verticalSection.emby-scroller-container,
+#homeTab .emby-scroller-container,
+#homeTab .emby-scroller,
+#homeTab .scrollX,
+#homeTab .verticalSection::before,
+#homeTab .verticalSection::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+/* /altffour-home-row-bg-fix-20260310 */
