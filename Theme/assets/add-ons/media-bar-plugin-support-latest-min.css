@@ -35,10 +35,29 @@
   color: unset;
 }
 
+/* Home route only: do not reserve extra fixed header wrapper height. */
+body.libraryDocument:has(#homeTab #slides-container) #reactRoot > div:nth-child(3) {
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  top: 0 !important;
+}
+
+body.libraryDocument:has(#homeTab #slides-container) .skinHeader,
+body.libraryDocument:has(#homeTab #slides-container) .headerTop,
+body.libraryDocument:has(#homeTab #slides-container) .headerTabs.sectionTabs,
+body.libraryDocument:has(#homeTab #slides-container) .headerLeft,
+body.libraryDocument:has(#homeTab #slides-container) .headerRight {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  top: 0 !important;
+}
+
 #homeTab #slides-container {
   width: 100vw;
   height: 62%;
-  top: calc(var(--appBarHeight) * 2 + 1.25em);
+  top: 0 !important;
   border: none;
   border-radius: 0;
   transition: all 0.125s, border 0s;
@@ -81,11 +100,11 @@
 }
 
 .layout-desktop {
-  --homePageTopGap: 19em !important;
+  --homePageTopGap: 0 !important;
 }
 
 .layout-mobile {
-  --homePageTopGap: 21em !important;
+  --homePageTopGap: 0 !important;
 }
 
 @media only screen and (max-width: 767px) and (orientation: portrait) {
@@ -122,17 +141,17 @@
 
 @media (min-width: 75em) {
   #homeTab #slides-container {
-    top: calc(var(--appBarHeight) + 1.25em);
+    top: 0 !important;
   }
 
   .layout-tv #homeTab #slides-container {
-    top: calc(var(--appBarHeight) * 2 + 1.25em);
+    top: 0 !important;
   }
 }
 
 @media (min-width: 100em) {
   .layout-tv #homeTab #slides-container {
-    top: calc(var(--appBarHeight) + 1.25em);
+    top: 0 !important;
   }
 }
 

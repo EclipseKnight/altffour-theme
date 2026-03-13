@@ -29,7 +29,7 @@ internal static class InjectorConfigSynchronizer
     private const string MediaBarSupportEntryName = "Altffour Tweaks - Media Bar Support";
     private const string InPlayerEpisodePreviewSupportEntryName = "Altffour Tweaks - In-Player Episode Preview Support";
 
-    internal const string RuntimeScriptUrl = BaseAddOnUrl + "/altffour-tweaks-plugin-latest-min.js?v=20260312-33";
+    internal const string RuntimeScriptUrl = BaseAddOnUrl + "/altffour-tweaks-plugin-latest-min.js?v=20260313-40";
     internal const string UserThemeSelectorScriptUrl = BaseAddOnUrl + "/altffour-user-theme-selector.js?v=20260310-25";
     internal const string MediaBarSupportCssUrl = BaseAddOnUrl + "/media-bar-plugin-support-latest-min.css?v=20260312-15";
     internal const string InPlayerEpisodePreviewSupportCssUrl = BaseAddOnUrl + "/altffour-in-player-episode-preview-support-latest-min.css?v=20260312-15";

@@ -3866,8 +3866,7 @@ body.libraryDocument.withSectionTabs .absolutePageTabContent {
 #reactRoot > div:nth-child(3) {
     container-name: skinHeader;
     container-type: size;
-    height: var(--appBarHeight);
-}
+    }
 
 @container skinHeader (min-height: 4.9em) {
     /* this is the alternative faded app bar */
@@ -3959,7 +3958,7 @@ body.libraryDocument.withSectionTabs .absolutePageTabContent {
 for extended styling, use the add-on */
 
 #slides-container {
-    top: calc(-0.5 * var(--appBarHeight));
+    top: calc(-1 * var(--appBarHeight));
 }
 
 .backdrop-overlay {
