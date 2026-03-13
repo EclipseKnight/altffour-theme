@@ -111,9 +111,29 @@
         }
         if (!Object.prototype.hasOwnProperty.call(themes, themeName)) {
             localStorage.removeItem(getThemeNameStorageKey(userId));
+            localStorage.removeItem(String(userId) + "-altffourPalette");
             return;
         }
         localStorage.setItem(getThemeNameStorageKey(userId), themeName);
+        if (themeName === "Default") {
+            localStorage.removeItem(String(userId) + "-altffourPalette");
+        } else {
+            localStorage.setItem(String(userId) + "-altffourPalette", String(themeName).toLowerCase());
+        }
+    }
+
+    function emitPaletteChanged(userId, themeName) {
+        try {
+            window.dispatchEvent(new CustomEvent("altffour:palette-changed", {
+                detail: {
+                    userId: String(userId || ""),
+                    themeName: String(themeName || "Default"),
+                    palette: String(themeName || "Default").toLowerCase()
+                }
+            }));
+        } catch (error) {
+            // no-op
+        }
     }
 
     function applyLivePalette(themeName) {
@@ -254,6 +274,7 @@
         } else {
             localStorage.removeItem(key);
         }
+        emitPaletteChanged(userId, themeName);
     }
 
     function ensureSelectorStyles() {
@@ -340,7 +361,7 @@
         select.addEventListener("change", function () {
             var nextTheme = select.value;
             setTheme(userId, nextTheme);
-            window.location.reload();
+            applyLivePalette(nextTheme);
         });
 
         body.appendChild(label);
@@ -378,10 +399,8 @@
 
         applyLivePalette(getCurrentTheme(userId));
 
-        if (normalizePaletteVersionInStoredCss(userId) || ensurePaletteBlockAtTop(userId)) {
-            window.location.reload();
-            return false;
-        }
+        normalizePaletteVersionInStoredCss(userId);
+        ensurePaletteBlockAtTop(userId);
 
         var selector = createThemeSelector(userId);
 

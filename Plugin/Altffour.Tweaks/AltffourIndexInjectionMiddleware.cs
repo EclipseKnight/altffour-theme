@@ -7,8 +7,6 @@ internal sealed class AltffourIndexInjectionMiddleware
 {
     private const string JsInjectorPublicLoaderId = "altffour-jsinjector-public-loader";
     private const string JsInjectorPublicScriptId = "javascriptinjector-public";
-    private const string ThemeSelectorFallbackLoaderId = "altffour-theme-selector-fallback-loader";
-    private const string ThemeSelectorLoaderId = "altffour-user-theme-selector-loader";
 
     private readonly RequestDelegate _next;
 
@@ -81,7 +79,7 @@ internal sealed class AltffourIndexInjectionMiddleware
             return html;
         }
 
-        if (html.Contains($"id=\"{ThemeSelectorFallbackLoaderId}\"", StringComparison.OrdinalIgnoreCase))
+        if (html.Contains($"id=\"{JsInjectorPublicLoaderId}\"", StringComparison.OrdinalIgnoreCase))
         {
             return html;
         }
@@ -102,23 +100,12 @@ internal sealed class AltffourIndexInjectionMiddleware
 
     private static string BuildFallbackInjection()
     {
-        var selectorScriptUrl = InjectorConfigSynchronizer.UserThemeSelectorScriptUrl;
-
         return $$"""
 <script id="{{JsInjectorPublicLoaderId}}">
 if (!document.getElementById('{{JsInjectorPublicScriptId}}')) {
   const script = document.createElement('script');
   script.id = '{{JsInjectorPublicScriptId}}';
   script.src = '/javascriptinjector/public.js';
-  script.defer = true;
-  document.head.appendChild(script);
-}
-</script>
-<script id="{{ThemeSelectorFallbackLoaderId}}">
-if (!document.getElementById('{{ThemeSelectorLoaderId}}')) {
-  const script = document.createElement('script');
-  script.id = '{{ThemeSelectorLoaderId}}';
-  script.src = '{{selectorScriptUrl}}';
   script.defer = true;
   document.head.appendChild(script);
 }

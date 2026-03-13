@@ -1,1 +1,86 @@
-#popupPreviewButton{width:2.5rem;height:2.5rem;min-width:2.5rem;min-height:2.5rem;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--smallRadius);color:var(--textColor);transition:transform 0.12s ease,color 0.12s ease,background-color 0.12s ease,box-shadow 0.12s ease}#popupPreviewButton svg{width:1.35rem;height:1.35rem;overflow:visible;pointer-events:none}#popupPreviewButton svg [stroke]{stroke:currentColor;stroke-width:0.62 !important;stroke-linecap:round;stroke-linejoin:round}.videoOsdBottom #popupPreviewButton:hover{color:white;background-color:var(--selectorBackgroundColorAlpha)}.videoOsdBottom #popupPreviewButton:active{transform:scale(0.96)}#popupPreviewButton.show-focus:focus,#popupPreviewButton:focus-visible{color:white;outline:none;box-shadow:0 0 0 2px var(--uiAccentColor)}@media only screen and (max-width:767px){#popupPreviewButton{width:2.85rem;height:2.85rem;min-width:2.85rem;min-height:2.85rem}#popupPreviewButton svg{width:1.5rem;height:1.5rem}}
+#popupPreviewButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--smallRadius);
+  color: var(--textColor);
+  transition: transform 0.12s ease, color 0.12s ease, background-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+#popupPreviewButton svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  overflow: visible;
+  pointer-events: none;
+}
+
+#popupPreviewButton svg [stroke] {
+  stroke: currentColor;
+  stroke-width: 0.62 !important;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Ensure the preview button is never visually suppressed by OSD skin overrides. */
+.videoOsdBottom #popupPreviewButton,
+#videoOsdPage #popupPreviewButton,
+.videoPlayerContainer #popupPreviewButton {
+  display: inline-flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 3;
+}
+
+.videoOsdBottom .buttons,
+#videoOsdPage .buttons {
+  overflow: visible !important;
+}
+
+.videoOsdBottom .buttons #popupPreviewButton,
+#videoOsdPage .buttons #popupPreviewButton {
+  order: initial !important;
+  margin-left: 0.32rem;
+  margin-right: 0;
+}
+
+#popupPreviewButton[disabled],
+#popupPreviewButton[aria-disabled="true"] {
+  opacity: 0.55 !important;
+  pointer-events: none !important;
+}
+
+.videoOsdBottom #popupPreviewButton:hover {
+  color: white;
+  background-color: var(--selectorBackgroundColorAlpha);
+}
+
+.videoOsdBottom #popupPreviewButton:active {
+  transform: scale(0.96);
+}
+
+#popupPreviewButton.show-focus:focus,
+#popupPreviewButton:focus-visible {
+  color: white;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--uiAccentColor);
+}
+
+@media only screen and (max-width: 767px) {
+  #popupPreviewButton {
+    width: 2.85rem;
+    height: 2.85rem;
+    min-width: 2.85rem;
+    min-height: 2.85rem;
+  }
+
+  #popupPreviewButton svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

@@ -29,10 +29,10 @@ internal static class InjectorConfigSynchronizer
     private const string MediaBarSupportEntryName = "Altffour Tweaks - Media Bar Support";
     private const string InPlayerEpisodePreviewSupportEntryName = "Altffour Tweaks - In-Player Episode Preview Support";
 
-    internal const string RuntimeScriptUrl = BaseAddOnUrl + "/altffour-tweaks-plugin-latest-min.js?v=20260310-19";
+    internal const string RuntimeScriptUrl = BaseAddOnUrl + "/altffour-tweaks-plugin-latest-min.js?v=20260312-32";
     internal const string UserThemeSelectorScriptUrl = BaseAddOnUrl + "/altffour-user-theme-selector.js?v=20260310-25";
-    internal const string MediaBarSupportCssUrl = BaseAddOnUrl + "/media-bar-plugin-support-latest-min.css?v=20260310-5";
-    internal const string InPlayerEpisodePreviewSupportCssUrl = BaseAddOnUrl + "/altffour-in-player-episode-preview-support-latest-min.css";
+    internal const string MediaBarSupportCssUrl = BaseAddOnUrl + "/media-bar-plugin-support-latest-min.css?v=20260312-15";
+    internal const string InPlayerEpisodePreviewSupportCssUrl = BaseAddOnUrl + "/altffour-in-player-episode-preview-support-latest-min.css?v=20260312-15";
 
     public static InjectorSyncResult Synchronize(IApplicationPaths applicationPaths, PluginConfiguration configuration, ILogger? logger)
     {
@@ -83,12 +83,7 @@ internal static class InjectorConfigSynchronizer
                 configuration.EnableTweaksLoader,
                 actions);
 
-            changed |= EnsureScriptEntry(
-                customJavaScripts,
-                UserThemeSelectorEntryName,
-                BuildScriptLoaderScript("altffour-user-theme-selector-loader", UserThemeSelectorScriptUrl),
-                true,
-                actions);
+            changed |= RemoveScriptEntry(customJavaScripts, UserThemeSelectorEntryName, actions);
 
             changed |= EnsureScriptEntry(
                 customJavaScripts,
@@ -248,6 +243,24 @@ internal static class InjectorConfigSynchronizer
         changed |= SetElementValue(scriptEntry, "RequiresAuthentication", "false");
 
         return changed;
+    }
+
+    private static bool RemoveScriptEntry(XElement customJavaScripts, string name, List<string> actions)
+    {
+        var scriptEntry = customJavaScripts
+            .Elements()
+            .FirstOrDefault(e =>
+                e.Name.LocalName == "CustomJavaScriptEntry"
+                && string.Equals(GetElementValue(e, "Name"), name, StringComparison.OrdinalIgnoreCase));
+
+        if (scriptEntry is null)
+        {
+            return false;
+        }
+
+        scriptEntry.Remove();
+        actions.Add($"Removed script entry: {name}");
+        return true;
     }
 
     private static string? GetElementValue(XElement parent, string elementName)

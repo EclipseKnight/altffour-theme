@@ -1,158 +1,266 @@
-/* Add-on: Media Bar plugin support 25.12.31 for the ElegantFin Theme for Jellyfin by lscambo13 */
-/* this styles the media bar plugin - start */
 .play-button::before,
 .detail-button::before,
 .favorite-button::before,
 .favorite-button.favorited::before {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 .play-button {
-    font-family: "Inter";
-    font-size: 1em;
-    font-weight: 500;
+  font-family: "Inter";
+  font-size: 1em;
+  font-weight: 500;
 }
 
-.backdrop,
-.backdrop-container,
-.backdrop-overlay {
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), 70%, rgba(0, 0, 0, 0));
-    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), 70%, rgba(0, 0, 0, 0));
-    background-color: transparent;
+/* Scope Media Bar visuals strictly to Home slideshow container to avoid playback/page bleed. */
+#homeTab #slides-container .backdrop,
+#homeTab #slides-container .backdrop-container,
+#homeTab #slides-container .backdrop-overlay {
+  mask-image: none;
+  -webkit-mask-image: none;
+  background-color: transparent;
 }
 
-.backdrop {
-    transform-origin: center left;
+#homeTab #slides-container .backdrop {
+  transform-origin: center left;
 }
 
 .rating-value {
-    flex-wrap: wrap;
-    justify-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .age-rating {
-    font-size: 0.8em;
-    font-family: "Archivo Narrow", sans-serif;
-    color: unset;
+  font-size: 0.8em;
+  font-family: "Archivo Narrow", sans-serif;
+  color: unset;
 }
 
-#slides-container {
-    width: 100vw;
-    height: 62%;
-    top: calc(var(--appBarHeight) * 2 + 1.25em);
-    border: none;
-    border-radius: 0;
-    transition: all 0.125s, border 0s;
-    user-select: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    overflow: hidden;
+#homeTab #slides-container {
+  width: 100vw;
+  height: 62%;
+  top: calc(var(--appBarHeight) * 2 + 1.25em);
+  border: none;
+  border-radius: 0;
+  transition: all 0.125s, border 0s;
+  user-select: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 }
 
-.logo-container {
-    top: 10vh;
+#homeTab #slides-container .logo-container {
+  top: 10vh;
 }
 
-.backdrop,
-.backdrop-container,
-.backdrop-overlay {
-    mask-image: none;
-    -webkit-mask-image: none;
+#homeTab #slides-container .backdrop-overlay {
+  background: linear-gradient(0deg, var(--darkerGradientPointAlpha), 45%, transparent) !important;
 }
 
-.backdrop-overlay {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.85), 40%, transparent);
+#homeTab #slides-container .pause-button {
+  top: 1em !important;
 }
 
-.pause-button {
-    top: 1em !important;
+#homeTab #slides-container .separator-icon {
+  font-size: 5px;
+  color: var(--dimTextColor);
 }
 
-.separator-icon {
-    font-size: 5px;
-    color: var(--dimTextColor);
+#homeTab #slides-container .dot {
+  border-radius: 0.25em;
+  width: 0.375em;
+  height: 0.375em;
+  transition: width 0.5s;
+  opacity: 0.5;
+  background-color: var(--textColor) !important;
 }
 
-.dot {
-    border-radius: 0.25em;
-    width: 0.375em;
-    height: 0.375em;
-    transition: width 0.5s;
-    opacity: 0.5;
-    background-color: var(--textColor) !important;
+#homeTab #slides-container .dot.active {
+  width: 2em;
+  transform: none;
 }
 
-.dot.active {
-    width: 2em;
-    transform: none;
-}
-
-/* Media Bar home handoff spacing: push home rows clearly below the hero. */
 .layout-desktop {
-    --homePageTopGap: 20em !important;
+  --homePageTopGap: 19em !important;
 }
 
 .layout-mobile {
-    --homePageTopGap: 22em !important;
+  --homePageTopGap: 21em !important;
 }
 
 @media only screen and (max-width: 767px) and (orientation: portrait) {
-    .button-container {
-        bottom: 3em;
-    }
+  #homeTab #slides-container .button-container {
+    bottom: 3em;
+  }
 
-    .tomato-rating,
-    .genre {
-        display: none;
-    }
+  #homeTab #slides-container .tomato-rating,
+  #homeTab #slides-container .genre {
+    display: none;
+  }
 
-    .dots-container {
-        bottom: 6em;
-    }
+  #homeTab #slides-container .dots-container {
+    bottom: 6em;
+  }
 
-    .info-container {
-        bottom: 5em;
-    }
+  #homeTab #slides-container .info-container {
+    bottom: 5em;
+  }
 
-    .logo-container {
-        top: calc(100% - 15em);
-    }
+  #homeTab #slides-container .logo-container {
+    top: calc(100% - 15em);
+  }
 
-    .backdrop {
-        transform-origin: center;
-    }
+  #homeTab #slides-container .backdrop {
+    transform-origin: center;
+  }
 
-    .left-arrow,
-    .right-arrow {
-        display: none !important;
-    }
+  #homeTab #slides-container .left-arrow,
+  #homeTab #slides-container .right-arrow {
+    display: none !important;
+  }
 }
 
 @media (min-width: 75em) {
-    #slides-container {
-        top: calc(var(--appBarHeight) + 1.25em);
-    }
+  #homeTab #slides-container {
+    top: calc(var(--appBarHeight) + 1.25em);
+  }
 
-    .layout-tv #slides-container {
-        top: calc(var(--appBarHeight) * 2 + 1.25em);
-    }
+  .layout-tv #homeTab #slides-container {
+    top: calc(var(--appBarHeight) * 2 + 1.25em);
+  }
 }
 
 @media (min-width: 100em) {
-    .layout-tv #slides-container {
-        top: calc(var(--appBarHeight) + 1.25em);
-    }
+  .layout-tv #homeTab #slides-container {
+    top: calc(var(--appBarHeight) + 1.25em);
+  }
 }
 
 @media only screen and (max-height: 767px) and (orientation: landscape) {
-    #slides-container {
-        height: 57%;
-    }
+  #homeTab #slides-container {
+    height: 57%;
+  }
 
-    .logo-container {
-        top: 3%;
-    }
+  #homeTab #slides-container .logo-container {
+    top: 3%;
+  }
 }
 
-/* this styles the media bar plugin - end */
+#homeTab #slides-container,
+#homeTab #slides-container .slide,
+#homeTab #slides-container .backdrop-overlay,
+#homeTab #slides-container .gradient-overlay {
+  background-color: transparent !important;
+}
+
+/* altffour-home-row-bg-final */
+#homeTab .verticalSection.ContinueWatching,
+#homeTab .verticalSection.ContinueWatching[style],
+#homeTab .verticalSection.ContinueWatching.section2,
+#homeTab .verticalSection.ContinueWatching.emby-scroller-container,
+#homeTab .verticalSection.ContinueWatching::before,
+#homeTab .verticalSection.ContinueWatching::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#homeTab .verticalSection.ContinueWatching > .itemsContainer,
+#homeTab .verticalSection.ContinueWatching > .itemsContainer[style],
+#homeTab .verticalSection.ContinueWatching .itemsContainer,
+#homeTab .verticalSection.ContinueWatching .sectionTitleContainer,
+#homeTab .verticalSection.ContinueWatching .sectionTitleContainer-cards,
+#homeTab .verticalSection.ContinueWatching .emby-scrollbuttons {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+#homeTab .verticalSection.ContinueWatching > .padded-top-focusscale.padded-bottom-focusscale.scroller,
+#homeTab .verticalSection.ContinueWatching > .scroller,
+#homeTab .verticalSection.ContinueWatching .padded-top-focusscale.padded-bottom-focusscale.scroller,
+#homeTab .verticalSection.ContinueWatching .scroller {
+  background: var(--headerColor) !important;
+  background-color: var(--headerColor) !important;
+  border-radius: var(--largeRadius) !important;
+  box-shadow: none !important;
+}
+
+/* Keep Media Bar visuals out of non-home pages (especially playback routes). */
+.videoDocument #slides-container,
+.videoDocument .bar-loading,
+.videoDocument .slide-loading-indicator,
+body.hide-scroll #slides-container,
+body.hide-scroll .bar-loading,
+body.hide-scroll .slide-loading-indicator,
+#videoOsdPage #slides-container,
+#videoOsdPage .bar-loading,
+#videoOsdPage .slide-loading-indicator,
+.videoPlayerContainer #slides-container,
+.videoPlayerContainer .bar-loading,
+.videoPlayerContainer .slide-loading-indicator,
+html.altffour-video-route #slides-container,
+html.altffour-video-route .bar-loading,
+html.altffour-video-route .slide-loading-indicator {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+body.altffour-hide-media-bar #slides-container,
+body.altffour-hide-media-bar .bar-loading,
+body.altffour-hide-media-bar .slide-loading-indicator {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Playback safety: keep the actual video layer visible and prevent page backgrounds from covering it. */
+html.altffour-video-route .backgroundContainer,
+html.altffour-video-route .backgroundContainer.withBackdrop,
+body.hide-scroll .backgroundContainer,
+body.hide-scroll .backgroundContainer.withBackdrop {
+  background: transparent !important;
+  background-image: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html.altffour-video-route #videoPlayerContainer,
+html.altffour-video-route .videoPlayerContainer,
+body.hide-scroll #videoPlayerContainer,
+body.hide-scroll .videoPlayerContainer {
+  z-index: 1 !important;
+}
+
+html.altffour-video-route #videoPlayerContainer video,
+html.altffour-video-route .videoPlayerContainer video,
+html.altffour-video-route .videoPlayerContainer .htmlvideoplayer,
+body.hide-scroll #videoPlayerContainer video,
+body.hide-scroll .videoPlayerContainer video,
+body.hide-scroll .videoPlayerContainer .htmlvideoplayer {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  z-index: 1 !important;
+}
+
+#videoOsdPage .osdHeader,
+.videoPlayerContainer .osdHeader,
+#videoOsdPage .videoOsdBottom,
+.videoPlayerContainer .videoOsdBottom {
+  z-index: 3 !important;
+}
