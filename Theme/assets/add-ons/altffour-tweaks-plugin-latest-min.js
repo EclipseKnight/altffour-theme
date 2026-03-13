@@ -1588,24 +1588,42 @@
         }
 
         var container = document.getElementById("slides-container");
+        var mediaBarNodes = document.querySelectorAll("#slides-container, .bar-loading, .slide-loading-indicator");
+        mediaBarNodes.forEach(function (node) {
+            node.style.removeProperty("display");
+            node.style.removeProperty("visibility");
+            node.style.removeProperty("opacity");
+            node.style.removeProperty("pointer-events");
+            node.style.removeProperty("z-index");
+        });
+
         if (container) {
-            container.style.removeProperty("display");
-            container.style.removeProperty("visibility");
-            container.style.removeProperty("pointer-events");
+            container.style.setProperty("display", "block", "important");
+            container.style.setProperty("visibility", "visible", "important");
+            container.style.setProperty("opacity", "1", "important");
+            container.style.setProperty("pointer-events", "auto", "important");
         }
 
         try {
-            if (mbe.VisibilityObserver && typeof mbe.VisibilityObserver.updateVisibility === "function") {
-                mbe.VisibilityObserver.updateVisibility();
+            if (mbe.STATE
+                && mbe.STATE.slideshow
+                && mbe.STATE.slideshow.slideInterval
+                && !mbe.STATE.slideshow.isPaused
+                && typeof mbe.STATE.slideshow.slideInterval.start === "function") {
+                mbe.STATE.slideshow.slideInterval.start();
+            }
+            if (mbe.SlideshowManager && typeof mbe.SlideshowManager.resumeActivePlayback === "function") {
+                mbe.SlideshowManager.resumeActivePlayback();
             }
         } catch (error) {
             // no-op
         }
 
         try {
+            var slideCount = document.querySelectorAll("#slides-container .slide").length;
             if (mbe.STATE
                 && mbe.STATE.slideshow
-                && !mbe.STATE.slideshow.hasInitialized
+                && (!mbe.STATE.slideshow.hasInitialized || !container || slideCount === 0)
                 && typeof mbe.initSlideshowData === "function") {
                 mbe.initSlideshowData();
             }
@@ -1635,7 +1653,7 @@
             // no-op
         }
 
-        var mediaBarNodes = document.querySelectorAll("#slides-container, .bar-loading, .slide-loading-indicator, #page-loader");
+        var mediaBarNodes = document.querySelectorAll("#slides-container, .bar-loading, .slide-loading-indicator");
         mediaBarNodes.forEach(function (node) {
             node.style.setProperty("display", "none", "important");
             node.style.setProperty("visibility", "hidden", "important");
