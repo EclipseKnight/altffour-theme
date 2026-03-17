@@ -243,23 +243,25 @@ body.altffour-hide-media-bar .slide-loading-indicator {
   z-index: -1 !important;
 }
 
-/* Playback safety: keep the actual video layer visible and prevent page backgrounds from covering it. */
+
+
+/* Playback safety: keep backdrop layers from painting above the native video/OSD stack. */
 html.altffour-video-route .backgroundContainer,
 html.altffour-video-route .backgroundContainer.withBackdrop,
 body.hide-scroll .backgroundContainer,
-body.hide-scroll .backgroundContainer.withBackdrop {
+body.hide-scroll .backgroundContainer.withBackdrop,
+.videoDocument .backgroundContainer,
+.videoDocument .backgroundContainer.withBackdrop {
   background: transparent !important;
   background-image: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
+  z-index: -1 !important;
   pointer-events: none !important;
 }
 
-html.altffour-video-route #videoPlayerContainer,
-html.altffour-video-route .videoPlayerContainer,
-body.hide-scroll #videoPlayerContainer,
-body.hide-scroll .videoPlayerContainer {
-  z-index: 1 !important;
+html.altffour-video-route .backdropImage,
+body.hide-scroll .backdropImage,
+.videoDocument .backdropImage {
+  opacity: 0 !important;
 }
 
 html.altffour-video-route #videoPlayerContainer video,
@@ -267,19 +269,11 @@ html.altffour-video-route .videoPlayerContainer video,
 html.altffour-video-route .videoPlayerContainer .htmlvideoplayer,
 body.hide-scroll #videoPlayerContainer video,
 body.hide-scroll .videoPlayerContainer video,
-body.hide-scroll .videoPlayerContainer .htmlvideoplayer {
+body.hide-scroll .videoPlayerContainer .htmlvideoplayer,
+.videoDocument #videoPlayerContainer video,
+.videoDocument .videoPlayerContainer video,
+.videoDocument .videoPlayerContainer .htmlvideoplayer {
   display: block !important;
   opacity: 1 !important;
   visibility: visible !important;
-  pointer-events: auto !important;
-  filter: none !important;
-  mix-blend-mode: normal !important;
-  z-index: 1 !important;
-}
-
-#videoOsdPage .osdHeader,
-.videoPlayerContainer .osdHeader,
-#videoOsdPage .videoOsdBottom,
-.videoPlayerContainer .videoOsdBottom {
-  z-index: 3 !important;
 }

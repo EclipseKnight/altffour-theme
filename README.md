@@ -41,6 +41,10 @@ Pinned release (fallback):
 @import url("https://stream.altffour.com/web/assets/add-ons/altffour-in-player-episode-preview-support-latest-min.css");
 ```
 
+## Playback/OSD maintenance notes
+
+- See `docs/playback-layout-notes.md` before changing Media Bar support CSS.
+
 ## Recommended runtime setup (Altffour Tweaks Plugin)
 
 If you install and enable the **Altffour Tweaks Plugin**, it automatically manages the required JavaScript Injector entries on startup/config save.
