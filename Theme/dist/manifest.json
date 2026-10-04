@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-03-09T16:40:34.046Z",
+  "generatedAt": "2026-10-04T22:05:20.954Z",
   "source": "Theme/altffour-theme-v1.0.64.css",
   "themeSlug": "altffour-theme",
   "brandName": "Altffour Theme",
   "forkVersion": "1.0.64",
-  "upstreamVersion": "1.0.64",
+  "upstreamVersion": "1.0.52",
   "notes": {
     "stable": "Use pinned version files in Jellyfin Branding.",
-    "latest": "Recommended default for day-to-day use. Keep stable pinned files for fallback.",
+    "latest": "For testing only; do not use for production pinning.",
     "compat": "Reduced selector complexity for older clients (drops :has rules)."
   },
   "files": {

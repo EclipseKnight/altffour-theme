@@ -1,4 +1,4 @@
-/* Altffour Theme for Jellyfin */
+/*! Altffour Theme for Jellyfin - based on ElegantFin by lscambo13 (https://github.com/lscambo13/ElegantFin), GPL-2.0. Changes (c) Altffour. Full license text: LICENSE.txt next to this file. */
 
 /* Add-ons: Uncomment to enable */
 /* @import url(./assets/add-ons/media-bar-plugin-support-nightly.css); */
@@ -9,7 +9,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
-    --altffourFooterText: "Altffour Theme v1.0.52 (Compat)";
+    --altffourFooterText: "Altffour Theme Latest • v1.0.64 (Compat)";
 
     /* Base theme colors */
     color-scheme: dark;
@@ -1754,7 +1754,7 @@ progress + span {
 
 .osdControls {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
 }
 
 .itemExternalLinks {
@@ -5270,7 +5270,6 @@ body {
 }
 
 /* Altffour Glass Layer - end */
-
 
 /* v1.0.63: consolidated profile/header controls fix block */
 .headerRight {
