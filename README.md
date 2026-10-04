@@ -72,3 +72,9 @@ Use this only when plugin-managed injector sync is unavailable and you need to a
 ```
 
 4. Keep `Enabled` checked. Leave `Requires Authentication` unchecked.
+
+## Credits and license
+
+- Based on [ElegantFin](https://github.com/lscambo13/ElegantFin) by lscambo13, licensed GPL-2.0. Changes (c) Altffour.
+- The theme selector add-on is derived from the [Jellyfish](https://github.com/n00bcodr/Jellyfish) theme's `theme_selector.js` by n00bcodr (DBAD license).
+- This theme is released under GPL-2.0. See `LICENSE`. Built CSS ships with it as `LICENSE.txt`.

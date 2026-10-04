@@ -1,3 +1,4 @@
+// Theme selector - derived from the Jellyfish theme's theme_selector.js by n00bcodr (https://github.com/n00bcodr/Jellyfish), DBAD license.
 (function () {
     "use strict";
 

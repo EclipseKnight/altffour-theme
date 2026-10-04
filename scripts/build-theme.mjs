@@ -80,6 +80,14 @@ function extractVersion(css) {
     return "local";
 }
 
+// ElegantFin credit (GPL-2.0). Added to every output if the source lacks it.
+const CREDIT =
+    "/*! Altffour Theme for Jellyfin - based on ElegantFin by lscambo13 (https://github.com/lscambo13/ElegantFin), GPL-2.0. Changes (c) Altffour. Full license text: LICENSE.txt next to this file. */\n";
+
+function ensureCredit(css) {
+    return css.includes("ElegantFin by lscambo13") ? css : CREDIT + css;
+}
+
 function normalizeHeader(css, label) {
     return css.replace(
         /--altffourFooterText:\s*"[^"]*"/,
@@ -165,12 +173,16 @@ function stripHasRules(css) {
 }
 
 function minifyCss(css) {
+    // Keep /*! ... */ license comments; they must survive minifying.
+    const kept = (css.match(/\/\*![\s\S]*?\*\//g) || []).join("\n");
     const withoutComments = css.replace(/\/\*[\s\S]*?\*\//g, "");
-    return withoutComments
+    // "+" is left alone: inside calc() the spaces around it are required.
+    const body = withoutComments
         .replace(/\s+/g, " ")
-        .replace(/\s*([{}:;,>+~])\s*/g, "$1")
+        .replace(/\s*([{}:;,>~])\s*/g, "$1")
         .replace(/;}/g, "}")
         .trim();
+    return kept ? `${kept}\n${body}` : body;
 }
 
 function build() {
@@ -192,8 +204,8 @@ function build() {
     const compatLabel = `${brandName} v${forkVersion} (Compat)`;
     const compatLatestLabel = `${brandName} Latest • ${buildTag} (Compat)`;
 
-    const stableCss = normalizeHeader(sourceCss, stableLabel);
-    const latestCss = normalizeHeader(sourceCss, latestLabel);
+    const stableCss = normalizeHeader(ensureCredit(sourceCss), stableLabel);
+    const latestCss = normalizeHeader(ensureCredit(sourceCss), latestLabel);
 
     const compatBase = stripHasRules(stableCss);
     const compatCss = normalizeHeader(compatBase, compatLabel);
@@ -219,6 +231,9 @@ function build() {
     writeFile(path.join(distDir, files.compatMin), minifyCss(compatCss));
     writeFile(path.join(distDir, files.compatLatest), compatLatestCss);
     writeFile(path.join(distDir, files.compatLatestMin), minifyCss(compatLatestCss));
+
+    // Ship the license next to the CSS.
+    fs.copyFileSync(path.join(repoRoot, "LICENSE"), path.join(distDir, "LICENSE.txt"));
 
     const manifest = {
         generatedAt: new Date().toISOString(),

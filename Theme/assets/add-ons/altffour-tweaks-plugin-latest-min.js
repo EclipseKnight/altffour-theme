@@ -1,3 +1,4 @@
+/* The palette picker in this file is derived from the Jellyfish theme's theme_selector.js by n00bcodr (https://github.com/n00bcodr/Jellyfish), DBAD license. */
 /* Add-on: Altffour Tweaks Plugin v26.03.01.3 for Jellyfin */
 /* Runtime UI hotfixes loaded via JavaScript Injector. */
 

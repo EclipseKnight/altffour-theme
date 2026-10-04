@@ -9,7 +9,7 @@ Keep changes focused on Jellyfin theme behavior, visual consistency, and cross-d
 - Validate on desktop and mobile layouts.
 - Avoid hardcoded hostnames when relative paths are possible.
 - Keep add-ons optional and isolated under `Theme/assets/add-ons/`.
-- Do not introduce upstream project branding in source files.
+- Upstream credit must stay: keep the ElegantFin (lscambo13, GPL-2.0) header in the theme sources and the Jellyfish (DBAD) credit in the theme selector scripts.
 
 ## Build check
 
