@@ -14,3 +14,21 @@ node_modules/
 # Local scratch
 /tmp.txt
 /commits.csv
+
+# Secrets and local settings
+.env
+.env.*
+!.env.example
+
+# Logs, test output and backup copies
+*.log
+test-results/
+playwright-report/
+**/error-context.md
+*.bak
+*.bak.*
+
+# Editors and agent scratch
+.vscode/
+.idea/
+.superpowers/
