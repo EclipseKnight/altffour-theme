@@ -1,0 +1,66 @@
+/*
+ * Shared look for the plugin catalogue images (1280×720): the Glass Keycap style of the app.
+ * Colours come from the Altffour app's Glass Keycap design tokens. Each card sets --accent, --accent-top
+ * (a lighter shade for the keycap's top), --deep (the keycap's side wall) and --glow.
+ * Fonts are not named by URL here: the renderer adds Chakra Petch and JetBrains Mono (both SIL OFL 1.1)
+ * when it draws the PNG.
+ */
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+body {
+  background: #0b0d12;
+  color: #eef2f7;
+  font-family: "Chakra Petch", system-ui, sans-serif;
+}
+
+/* Soft colour behind the glass, so the frosted panel has something to blur. */
+.stage { position: relative; width: 100%; height: 100%; }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); }
+.blob.one { width: 520px; height: 520px; left: 40px; top: 60px; background: var(--glow); }
+.blob.two { width: 420px; height: 420px; right: 60px; bottom: -120px; background: var(--glow-2, rgba(111, 168, 255, 0.35)); }
+
+.panel {
+  position: absolute;
+  inset: 72px;
+  display: flex;
+  align-items: center;
+  gap: 72px;
+  padding: 0 84px;
+  border-radius: 26px;
+  background: rgba(16, 19, 26, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 30px 80px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(28px) saturate(140%);
+}
+
+/* The keycap: raised, with a darker side wall below its top face. */
+.key {
+  flex: none;
+  width: 280px;
+  height: 280px;
+  margin-bottom: 22px;
+  border-radius: 44px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, var(--accent-top) 0%, var(--accent) 100%);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.12),
+    0 22px 0 var(--deep),
+    0 40px 70px var(--glow);
+}
+.key svg { width: 156px; height: 156px; color: #03151b; }
+
+.text { min-width: 0; }
+/* LED text, like the numbers in the app. */
+.brand {
+  margin: 0 0 18px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--accent);
+  text-shadow: 0 0 18px var(--glow);
+}
+h1 { margin: 0; font-size: 104px; font-weight: 700; line-height: 1; letter-spacing: -0.01em; }
+.line { margin: 26px 0 0; font-size: 31px; font-weight: 500; line-height: 1.3; color: #aab3c1; }

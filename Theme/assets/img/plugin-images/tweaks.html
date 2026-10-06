@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- Catalogue image for the Altffour Tweaks plugin. Edit, then render to tweaks.png (see card.css). -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Altffour Tweaks</title>
+<link rel="stylesheet" href="card.css">
+<style>
+  /* Green accent from the app's tokens (accents.green). */
+  :root { --accent: #39ff9f; --accent-top: #a6ffd2; --deep: #179a5c; --glow: rgba(57, 255, 159, 0.36); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="panel">
+    <div class="key">
+      <!-- Two switches, one on and one off: drawn here from plain shapes. -->
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="6" y="10" width="52" height="20" rx="10" fill="currentColor"/>
+        <circle cx="48" cy="20" r="6.5" fill="var(--accent)"/>
+        <rect x="6" y="36" width="52" height="20" rx="10" fill="none" stroke="currentColor" stroke-width="4"/>
+        <circle cx="17" cy="46" r="6" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="text">
+      <p class="brand">ALTFFOUR</p>
+      <h1>Tweaks</h1>
+      <p class="line">Keeps the Altffour theme's add-ons loaded in Jellyfin.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
