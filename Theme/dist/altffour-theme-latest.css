@@ -9,7 +9,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
-    --altffourFooterText: "Altffour Theme Latest • v1.0.64";
+    --altffourFooterText: "Altffour Theme Latest • v1.0.65";
 
     /* Base theme colors */
     color-scheme: dark;
@@ -1626,6 +1626,15 @@ html,
 .layout-mobile .backdropImage {
     opacity: 0.8 !important;
     filter: brightness(0.13) saturate(0.52) contrast(0.96) blur(8px) !important;
+}
+
+/* Jellyfin 12.2 keeps two backdrop slots and leaves the old image in the slot it stops using.
+   The rules here and in the jf12 add-ons hold every slot visible (opacity with !important) and
+   fade the current one out at the bottom, so the previous item's backdrop showed through.
+   Hide the unused slot. Visibility, not opacity: the details-page opacity rule outranks any
+   selector here. On 12.1 every backdrop has this class, so this changes nothing there. */
+.backdropImage:not(.displayingBackdropImage) {
+    visibility: hidden !important;
 }
 
 
@@ -3596,6 +3605,11 @@ ul.MuiList-root.MuiMenu-list.MuiList-dense > div:first-child {
     transform: translateY(3em);
 }
 
+#loginPage .padded-left.padded-right.padded-bottom-page::before {
+    content: none !important;
+    display: none !important;
+}
+
 .manualLoginForm .sectionTitle,
 .visualLoginForm > h1 {
     display: none;
@@ -3615,20 +3629,48 @@ ul.MuiList-root.MuiMenu-list.MuiList-dense > div:first-child {
 
 .manualLoginForm::before,
 .visualLoginForm::before {
+    content: "";
+    position: relative;
+    display: block;
+    width: min(19.5rem, 80%);
+    height: 3.35rem;
+    margin: 0 auto 0.85rem;
+    background: var(--altffourLogoFull) no-repeat center center / contain;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+    pointer-events: none;
+}
+
+.manualLoginForm::after,
+.visualLoginForm::after {
     content: var(--loginPageText);
     position: relative;
     display: block;
-    top: -3.5em;
-    margin-bottom: -1em;
-    font-size: 1.875em;
+    margin: 0 auto 1.2rem;
+    font-size: 1.95em;
     font-weight: 800;
     color: white;
     text-align: center;
+    letter-spacing: 0.01em;
 }
 
 .manualLoginForm,
 .visualLoginForm {
     position: relative;
+}
+
+@media (max-width: 48em) {
+    .manualLoginForm::before,
+    .visualLoginForm::before {
+        width: min(16.5rem, 84%);
+        height: 2.9rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .manualLoginForm::after,
+    .visualLoginForm::after {
+        font-size: 1.72em;
+        margin-bottom: 1.05rem;
+    }
 }
 
 #quickConnectPreferencesPage .padded-left.padded-right.padded-bottom-page {
@@ -4118,8 +4160,7 @@ body.libraryDocument.withSectionTabs .absolutePageTabContent {
 #reactRoot > div:nth-child(3) {
     container-name: skinHeader;
     container-type: size;
-    height: var(--appBarHeight);
-}
+    }
 
 @container skinHeader (min-height: 4.9em) {
     /* this is the alternative faded app bar */
@@ -4211,7 +4252,7 @@ body.libraryDocument.withSectionTabs .absolutePageTabContent {
 for extended styling, use the add-on */
 
 #slides-container {
-    top: calc(-0.5 * var(--appBarHeight));
+    top: calc(-1 * var(--appBarHeight));
 }
 
 .backdrop-overlay {
@@ -5799,3 +5840,125 @@ html.layout-desktop body,
   -webkit-backdrop-filter: none !important;
 }
 /* /altffour-home-row-bg-fix-20260310 */
+
+/* /altffour-subtitle-visibility-and-selection-20260312 */
+#videoPlayerContainer video::cue,
+.videoPlayerContainer video::cue,
+.videoPlayerContainer .htmlvideoplayer::cue {
+  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.62) !important;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 1px rgba(0, 0, 0, 0.95) !important;
+}
+
+.selectionCommandsPanel .actionSheetMenuItem:has(.listItemIcon.check:not([style*="hidden"])),
+.selectionCommandsPanel .actionSheetMenuItem[aria-selected="true"],
+.selectionCommandsPanel .actionSheetMenuItem[aria-checked="true"],
+.selectionCommandsPanel .actionSheetMenuItem.listItem-selected {
+  background: rgba(122, 91, 181, 0.38) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(184, 158, 236, 0.65),
+    0 0 0 1px rgba(184, 158, 236, 0.22) !important;
+}
+
+.selectionCommandsPanel .actionSheetMenuItem:has(.listItemIcon.check:not([style*="hidden"])) .listItemBodyText,
+.selectionCommandsPanel .actionSheetMenuItem[aria-selected="true"] .listItemBodyText,
+.selectionCommandsPanel .actionSheetMenuItem[aria-checked="true"] .listItemBodyText,
+.selectionCommandsPanel .actionSheetMenuItem.listItem-selected .listItemBodyText {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.selectionCommandsPanel .actionSheetMenuItem:has(.listItemIcon.check:not([style*="hidden"])) .listItemIcon.check,
+.selectionCommandsPanel .actionSheetMenuItem[aria-selected="true"] .listItemIcon.check,
+.selectionCommandsPanel .actionSheetMenuItem[aria-checked="true"] .listItemIcon.check,
+.selectionCommandsPanel .actionSheetMenuItem.listItem-selected .listItemIcon.check {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.selectionCommandsPanel .listItem[aria-selected="true"],
+.selectionCommandsPanel .listItem[aria-checked="true"],
+.selectionCommandsPanel .listItem.selected,
+.selectionCommandsPanel .listItem.listItem-selected,
+.selectionCommandsPanel .emby-button[aria-selected="true"],
+.selectionCommandsPanel .emby-button[aria-checked="true"] {
+  background: rgba(122, 91, 181, 0.38) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(184, 158, 236, 0.65),
+    0 0 0 1px rgba(184, 158, 236, 0.22) !important;
+}
+
+.selectionCommandsPanel .listItem[aria-selected="true"] .listItemBodyText,
+.selectionCommandsPanel .listItem[aria-checked="true"] .listItemBodyText,
+.selectionCommandsPanel .listItem.selected .listItemBodyText,
+.selectionCommandsPanel .listItem.listItem-selected .listItemBodyText,
+.selectionCommandsPanel .emby-button[aria-selected="true"] .listItemBodyText,
+.selectionCommandsPanel .emby-button[aria-checked="true"] .listItemBodyText {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* ASS/subtitle overlay safety: keep renderer layers visible above video. */
+.videoPlayerContainer .libassjs-canvas-parent,
+.videoPlayerContainer #libassjs-canvas-parent,
+.videoPlayerContainer .libassjs-canvas,
+.videoPlayerContainer #libassjs-canvas,
+.videoPlayerContainer .videoSubtitles,
+.videoPlayerContainer #videoSubtitles,
+.videoPlayerContainer .subtitles,
+.videoPlayerContainer .subtitleText {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+}
+
+/* Altffour login stack final fix: logo above heading, heading above fields */
+#loginPage .padded-left.padded-right.padded-bottom-page::before{content:none!important;display:none!important}
+.manualLoginForm::before,.visualLoginForm::before,.manualLoginForm::after,.visualLoginForm::after{content:none!important;display:none!important}
+.manualLoginForm .sectionTitle,.visualLoginForm>h1{display:block!important;margin:0 0 1.15rem!important;text-align:center!important;font-size:1.95em!important;font-weight:800!important;line-height:1.15!important;color:#fff!important;letter-spacing:.01em!important}
+.manualLoginForm .sectionTitle::before,.visualLoginForm>h1::before{content:"";display:block;width:min(19.5rem,80%);height:3.35rem;margin:0 auto .75rem;background:var(--altffourLogoFull) no-repeat center center/contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.45));pointer-events:none}
+@media (max-width:48em){.manualLoginForm .sectionTitle,.visualLoginForm>h1{font-size:1.72em!important;margin-bottom:1.05rem!important}.manualLoginForm .sectionTitle::before,.visualLoginForm>h1::before{width:min(16.5rem,84%);height:2.9rem;margin-bottom:.6rem}}
+
+/* Altffour login logo size bump */
+.manualLoginForm .sectionTitle::before,.visualLoginForm>h1::before{width:min(23rem,88%)!important;height:4.25rem!important;margin:0 auto .85rem!important}
+@media (max-width:48em){.manualLoginForm .sectionTitle::before,.visualLoginForm>h1::before{width:min(19rem,90%)!important;height:3.35rem!important;margin-bottom:.65rem!important}}
+
+/* altffour-settings-hover-stability-20260324 */
+@media (hover:hover) and (pointer:fine){
+  #myPreferencesMenuPage .listItem:hover,
+  #myPreferencesMenuPage .navMenuOption:hover,
+  .dashboardDocument .listItem:hover,
+  .dashboardDocument .navMenuOption:hover,
+  #myPreferencesMenuPage .listItem:focus,
+  #myPreferencesMenuPage .navMenuOption:focus,
+  .dashboardDocument .listItem:focus,
+  .dashboardDocument .navMenuOption:focus{
+    transform:none !important;
+    border:none !important;
+    border-color:transparent !important;
+    box-shadow:none !important;
+    outline:none !important;
+  }
+
+  #myPreferencesMenuPage .listItem-border,
+  .dashboardDocument .listItem-border,
+  #myPreferencesMenuPage .listItem-border:hover,
+  .dashboardDocument .listItem-border:hover,
+  #myPreferencesMenuPage .listItem-border.emby-button.show-focus:focus,
+  .dashboardDocument .listItem-border.emby-button.show-focus:focus,
+  #myPreferencesMenuPage .navMenuOption::before,
+  #myPreferencesMenuPage .navMenuOption::after,
+  .dashboardDocument .navMenuOption::before,
+  .dashboardDocument .navMenuOption::after{
+    border:none !important;
+    border-color:transparent !important;
+    box-shadow:none !important;
+    outline:none !important;
+  }
+}
+

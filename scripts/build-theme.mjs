@@ -177,9 +177,12 @@ function minifyCss(css) {
     const kept = (css.match(/\/\*![\s\S]*?\*\//g) || []).join("\n");
     const withoutComments = css.replace(/\/\*[\s\S]*?\*\//g, "");
     // "+" is left alone: inside calc() the spaces around it are required.
+    // Only the space after ":" goes. A space before it can be a descendant combinator
+    // (".a :not(.b)" is not ".a:not(.b)").
     const body = withoutComments
         .replace(/\s+/g, " ")
-        .replace(/\s*([{}:;,>~])\s*/g, "$1")
+        .replace(/\s*([{};,>~])\s*/g, "$1")
+        .replace(/:\s+/g, ":")
         .replace(/;}/g, "}")
         .trim();
     return kept ? `${kept}\n${body}` : body;
